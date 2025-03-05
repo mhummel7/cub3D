@@ -12,6 +12,14 @@
 
 #include "../includes/cub3d.h"
 
+void	error_exit(const char *message)
+{
+	write(2, "Error: ", 7);
+	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
+	exit(EXIT_FAILURE);
+}
+
 void init_mlx(t_game *game)
 {
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
@@ -56,23 +64,23 @@ int	check_collision(t_game *game, double new_x, double new_y)
 }
 
 // Handles key presses, ESC key closes the window and WASD for movement
-static void	key_hook(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
-	double	move_speed;
-	double	rot_speed;
+// static void	key_hook(mlx_key_data_t keydata, void *param)
+// {
+// 	t_game	*game;
+// 	double	move_speed;
+// 	double	rot_speed;
 
-	game = (t_game *)param;
-	move_speed = 0.1; // movement speed(can change that if its to fast or to slow we will see)
-	rot_speed = 0.05; // rotation speed, can also be changed
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(game->mlx);
-	handle_movement(game, keydata, move_speed);
-	handle_strafe(game, keydata, move_speed);
-	handle_rotation(game, keydata, rot_speed);
-	printf("Pos: (%.2f, %.2f), Dir: (%.2f, %.2f)\n", game->pos_x, game->pos_y,
-		game->dir_x, game->dir_y); // shows the position and direction of the player in the console
-}
+// 	game = (t_game *)param;
+// 	move_speed = 0.1; // movement speed(can change that if its to fast or to slow we will see)
+// 	rot_speed = 0.05; // rotation speed, can also be changed
+// 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+// 		mlx_close_window(game->mlx);
+// 	handle_movement(game, keydata, move_speed);
+// 	handle_strafe(game, keydata, move_speed);
+// 	handle_rotation(game, keydata, rot_speed);
+// 	printf("Pos: (%.2f, %.2f), Dir: (%.2f, %.2f)\n", game->pos_x, game->pos_y,
+// 		game->dir_x, game->dir_y); // shows the position and direction of the player in the console
+// }
 
 // Main entry point: sets up game, parses file, starts MLX42
 // a lot of debug messages to test it because i was having problems getting it started

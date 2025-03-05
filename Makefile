@@ -4,8 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 # Source and object files
 SRC_DIR = src
-SRC = $(SRC_DIR)/main.c \
-      $(SRC_DIR)/parsing.c
+SRC = $(SRC_DIR)/main.c 
 OBJ_DIR = obj
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
@@ -17,10 +16,11 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 LDFLAGS = -L$(LIBFT_DIR) -lft
 
-# MiniLibX integration for macOS
-MLX_DIR = minilibx_opengl
-MLX = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
+#mlx integration
+MLX_FLAGS = -LMLX42/build -lmlx42 -lglfw -lm
+
+MLX42/build/libmlx42.a:
+	cd MLX42 && cmake -B build && make -C build -j4
 
 # Rules
 all: $(NAME)
@@ -29,12 +29,8 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-# Compile miniLibX
-$(MLX):
-	$(MAKE) -C $(MLX_DIR)
-
 # Link object files with libraries
-$(NAME): $(OBJ) $(LIBFT) $(MLX)
+$(NAME): $(OBJ) $(LIBFT) MLX42/build/libmlx42.a
 	$(CC) $(OBJ) $(LDFLAGS) $(MLX_FLAGS) -o $(NAME)
 
 # Compile source files to object files
