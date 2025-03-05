@@ -12,6 +12,12 @@
 
 #include "../includes/cub3d.h"
 
+void init_mlx(t_game *game)
+{
+	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
+	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+}
+
 // Initializes game struct with default (safe) values / -1 means uninitialized
 void	init_game(t_game *game)
 {
@@ -77,22 +83,22 @@ int	main(int argc, char **argv)
 		error_exit("Usage: ./cub3D <map.cub>"); // checks if the file is a .cub file and the number of arguments
 	init_game(&game); // initializes game struct
 	printf("Parsing file...\n");
-	parse_cub_file(argv[1], &game); // parses the cub file
+	// parse_cub_file(argv[1], &game); // parses the cub file
 	printf("Initializing MLX42...\n");
 	init_mlx(&game); // initializes MLX42
-	printf("Drawing pixel...\n");
-	mlx_put_pixel(game.img, 400, 300, 0xFF0000FF); // draws a red pixel dot in the middle
-	printf("Displaying image...\n");
-	mlx_image_to_window(game.mlx, game.img, 0, 0); // displays image
-	printf("Setting key hook...\n");
-	mlx_key_hook(game.mlx, key_hook, &game); // sets up key handling
-	printf("Entering MLX loop...\n");
-	mlx_loop(game.mlx); // starts MLX42 event loop
-	printf("Terminating MLX42...\n");
-	mlx_terminate(game.mlx); // cleans up mlx42 resources
-	printf("Freeing game...\n");
-	free_game(&game); // free game struct memory
-	printf("Done.\n");
+	// printf("Drawing pixel...\n");
+	// mlx_put_pixel(game.img, 400, 300, 0xFF0000FF); // draws a red pixel dot in the middle
+	// printf("Displaying image...\n");
+	//mlx_image_to_window(game.mlx, game.img, 0, 0); // displays image
+	//printf("Setting key hook...\n");
+	//mlx_key_hook(game.mlx, key_hook, &game); // sets up key handling
+	//printf("Entering MLX loop...\n");
+	//mlx_loop(game.mlx); // starts MLX42 event loop
+	//printf("Terminating MLX42...\n");
+	//mlx_terminate(game.mlx); // cleans up mlx42 resources
+	//printf("Freeing game...\n");
+	//free_game(&game); // free game struct memory
+	//printf("Done.\n");
 	return (0);
 }
 

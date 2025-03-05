@@ -22,6 +22,9 @@
 #include <unistd.h>
 #include <math.h>
 
+# define WIDTH		1920
+# define HEIGHT		1080
+
 typedef struct s_game
 {
 	char *no_texture;
