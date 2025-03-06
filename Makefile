@@ -4,8 +4,13 @@ CFLAGS = -Wall -Wextra -Werror
 
 # Source and object files
 SRC_DIR = src
-SRC = src/main.c
-
+SRC = $(SRC_DIR)/main.c \
+		$(SRC_DIR)/parsing_elements.c \
+		$(SRC_DIR)/parsing_map.c \
+		$(SRC_DIR)/validate_map.c \
+		$(SRC_DIR)/utils.c \
+		$(SRC_DIR)/free.c \
+		$(SRC_DIR)/mlx_utils.c
 OBJ_DIR = obj
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
