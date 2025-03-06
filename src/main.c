@@ -24,6 +24,8 @@ void init_mlx(t_game *game)
 {
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->pos_x = WIDTH  / 2; // Center the cube horizontally
+    game->pos_y = HEIGHT / 2;
 }
 
 // Initializes game struct with default (safe) values / -1 means uninitialized
@@ -89,15 +91,36 @@ void render(void* param)
     // Clear the image with a color (e.g., black)
     memset(game->img->pixels, 0, game->img->width * game->img->height * sizeof(int32_t));
 
-    // Perform your rendering logic here
-    // For example, draw a pixel at (x, y) with a specific color
-    int x = 100;
-    int y = 100;
-    int color = 0xFF0000FF; // Red color in ARGB format
-    mlx_put_pixel(game->img, x, y, color);
+    // Draw the cube (a rectangle) at its current position
+    for (int y = 0; y < CUBE_SIZE; y++) {
+        for (int x = 0; x < CUBE_SIZE; x++) {
+            mlx_put_pixel(game->img, game->pos_x + x, game->pos_y + y, 0xFF0000FF); // Red color
+        }
+    }
 
     // Render the image to the window
     mlx_image_to_window(game->mlx, game->img, 0, 0);
+}
+
+void keys_hook(mlx_key_data_t keydata, void* param)
+{
+    t_game* game = (t_game*)param;
+
+    // Move the cube based on key input
+	if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		game->pos_y -= 10; // Move up
+	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		game->pos_y += 10; // Move down
+	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		game->pos_x -= 10; // Move left
+	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		game->pos_x += 10; // Move right
+
+    // Ensure the cube stays within the window bounds
+    if (game->pos_x < 0) game->pos_x = 0;
+    if (game->pos_y < 0) game->pos_y = 0;
+    if (game->pos_x > WIDTH - CUBE_SIZE) game->pos_x = WIDTH - CUBE_SIZE;
+    if (game->pos_y > HEIGHT - CUBE_SIZE) game->pos_y = HEIGHT - CUBE_SIZE;
 }
 
 // Main entry point: sets up game, parses file, starts MLX42
@@ -113,6 +136,7 @@ int	main(int argc, char **argv)
 	printf("Initializing MLX42...\n");
 	init_mlx(&game); // initializes MLX42
 	mlx_loop_hook(game.mlx, render, &game);
+	mlx_key_hook(game.mlx, keys_hook, &game);
 	mlx_loop(game.mlx);
 	mlx_terminate(game.mlx);
 	// printf("Drawing pixel...\n");
