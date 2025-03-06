@@ -47,21 +47,21 @@ void	init_game(t_game *game)
 }
 
 // Checks if moving to (new_x, new_y) hits a wall or goes out of bounds
-int	check_collision(t_game *game, double new_x, double new_y)
-{
-	int	map_x;
-	int	map_y;
+// int	check_collision(t_game *game, double new_x, double new_y)
+// {
+// 	int	map_x;
+// 	int	map_y;
 
-	map_x = (int)new_x;
-	map_y = (int)new_y;
-	if (map_x < 0 || map_x >= game->map_width) //checks if out of bounds
-		return (1);
-	if (map_y < 0 || map_y >= game->map_height)
-		return (1);
-	if (game->map[map_y][map_x] == '1') // checking if there is a wall
-		return (1);
-	return (0); // if there is no collision
-}
+// 	map_x = (int)new_x;
+// 	map_y = (int)new_y;
+// 	if (map_x < 0 || map_x >= game->map_width) //checks if out of bounds
+// 		return (1);
+// 	if (map_y < 0 || map_y >= game->map_height)
+// 		return (1);
+// 	if (game->map[map_y][map_x] == '1') // checking if there is a wall
+// 		return (1);
+// 	return (0); // if there is no collision
+// }
 
 // Handles key presses, ESC key closes the window and WASD for movement
 // static void	key_hook(mlx_key_data_t keydata, void *param)
