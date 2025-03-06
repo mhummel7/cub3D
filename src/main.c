@@ -82,6 +82,24 @@ void	init_game(t_game *game)
 // 		game->dir_x, game->dir_y); // shows the position and direction of the player in the console
 // }
 
+void render(void* param)
+{
+    t_game* game = (t_game*)param;
+
+    // Clear the image with a color (e.g., black)
+    memset(game->img->pixels, 0, game->img->width * game->img->height * sizeof(int32_t));
+
+    // Perform your rendering logic here
+    // For example, draw a pixel at (x, y) with a specific color
+    int x = 100;
+    int y = 100;
+    int color = 0xFF0000FF; // Red color in ARGB format
+    mlx_put_pixel(game->img, x, y, color);
+
+    // Render the image to the window
+    mlx_image_to_window(game->mlx, game->img, 0, 0);
+}
+
 // Main entry point: sets up game, parses file, starts MLX42
 // a lot of debug messages to test it because i was having problems getting it started
 int	main(int argc, char **argv)
@@ -94,6 +112,9 @@ int	main(int argc, char **argv)
 	// parse_cub_file(argv[1], &game); // parses the cub file
 	printf("Initializing MLX42...\n");
 	init_mlx(&game); // initializes MLX42
+	mlx_loop_hook(game.mlx, render, &game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
 	// printf("Drawing pixel...\n");
 	// mlx_put_pixel(game.img, 400, 300, 0xFF0000FF); // draws a red pixel dot in the middle
 	// printf("Displaying image...\n");
