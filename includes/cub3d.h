@@ -24,7 +24,7 @@
 
 # define WIDTH		1920
 # define HEIGHT		1080
-# define CUBE_SIZE  50
+# define CUBE_SIZE  30
 
 typedef struct s_game
 {
@@ -42,7 +42,8 @@ typedef struct s_game
 	double dir_x;
 	double dir_y;
 	mlx_t *mlx;
-	mlx_image_t *img; // For rendering
+	mlx_image_t *static_layer;
+	mlx_image_t *dynamic_layer; // For rendering
 } t_game;
 
 #endif

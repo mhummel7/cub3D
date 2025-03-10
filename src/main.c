@@ -23,7 +23,8 @@ void	error_exit(const char *message)
 void init_mlx(t_game *game)
 {
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
-	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->dynamic_layer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->static_layer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->pos_x = WIDTH  / 2; // Center the cube horizontally
     game->pos_y = HEIGHT / 2;
 }
@@ -45,7 +46,8 @@ void	init_game(t_game *game)
 	game->dir_x = 0;
 	game->dir_y = 0;
 	game->mlx = NULL;
-	game->img = NULL;
+	game->dynamic_layer = NULL;
+	game->static_layer = NULL;
 }
 
 // Checks if moving to (new_x, new_y) hits a wall or goes out of bounds
@@ -89,17 +91,48 @@ void render(void* param)
     t_game* game = (t_game*)param;
 
     // Clear the image with a color (e.g., black)
-    memset(game->img->pixels, 0, game->img->width * game->img->height * sizeof(int32_t));
+    memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width * game->dynamic_layer->height * sizeof(int32_t));
 
     // Draw the cube (a rectangle) at its current position
     for (int y = 0; y < CUBE_SIZE; y++) {
         for (int x = 0; x < CUBE_SIZE; x++) {
-            mlx_put_pixel(game->img, game->pos_x + x, game->pos_y + y, 0xFF0000FF); // Red color
+            mlx_put_pixel(game->dynamic_layer, game->pos_x + x, game->pos_y + y, 0xFF0000FF); // Red color
         }
     }
 
     // Render the image to the window
-    mlx_image_to_window(game->mlx, game->img, 0, 0);
+    mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
+}
+
+void add_static_pixels(t_game *game, char* filename)
+{
+	int base_x = 30;
+	int base_y = 30;
+	(void)game;
+	int fd = open(filename, O_RDONLY);
+	char *str = get_next_line(fd);
+	int y = 0;
+	int x = 0;
+	while(str)
+	{
+		while(str[x] != '\0')
+		{
+			if (str[x] == '1')
+				for (int y = 0; y < CUBE_SIZE; y++) {
+					for (int x = 0; x < CUBE_SIZE; x++)
+					{
+						mlx_put_pixel(game->static_layer, base_x + x, base_y + y, 0xFFFFFFFF); // White color
+					}
+				}
+				base_x += 30;
+			x++;
+		}
+		printf("%i\n", y);
+		y++;
+		str = get_next_line(fd);
+	}
+
+	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
 }
 
 void keys_hook(mlx_key_data_t keydata, void* param)
@@ -135,14 +168,15 @@ int	main(int argc, char **argv)
 	// parse_cub_file(argv[1], &game); // parses the cub file
 	printf("Initializing MLX42...\n");
 	init_mlx(&game); // initializes MLX42
+	add_static_pixels(&game, argv[1]);
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_key_hook(game.mlx, keys_hook, &game);
 	mlx_loop(game.mlx);
 	mlx_terminate(game.mlx);
 	// printf("Drawing pixel...\n");
-	// mlx_put_pixel(game.img, 400, 300, 0xFF0000FF); // draws a red pixel dot in the middle
+	// mlx_put_pixel(game.dynamic_layer, 400, 300, 0xFF0000FF); // draws a red pixel dot in the middle
 	// printf("Displaying image...\n");
-	//mlx_image_to_window(game.mlx, game.img, 0, 0); // displays image
+	//mlx_image_to_window(game.mlx, game.dynamic_layer, 0, 0); // displays image
 	//printf("Setting key hook...\n");
 	//mlx_key_hook(game.mlx, key_hook, &game); // sets up key handling
 	//printf("Entering MLX loop...\n");
