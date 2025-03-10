@@ -111,24 +111,27 @@ void add_static_pixels(t_game *game, char* filename)
 	(void)game;
 	int fd = open(filename, O_RDONLY);
 	char *str = get_next_line(fd);
-	int y = 0;
+	int add_y = 1;
 	int x = 0;
+	int base_x_mult = base_x;
+	int base_y_mult = 30;
 	while(str)
 	{
-		while(str[x] != '\0')
+		while(str[x] != '\n')
 		{
 			if (str[x] == '1')
 				for (int y = 0; y < CUBE_SIZE; y++) {
 					for (int x = 0; x < CUBE_SIZE; x++)
 					{
-						mlx_put_pixel(game->static_layer, base_x + x, base_y + y, 0xFFFFFFFF); // White color
+						mlx_put_pixel(game->static_layer, base_x_mult + x, base_y_mult + y, 0xFFFFFFFF); // White color
 					}
 				}
-				base_x += 30;
+			base_x_mult += 30;
 			x++;
 		}
-		printf("%i\n", y);
-		y++;
+		add_y++;
+		base_x_mult = 30;
+		base_y_mult = base_y * add_y;
 		str = get_next_line(fd);
 	}
 
