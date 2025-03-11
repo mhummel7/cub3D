@@ -142,25 +142,47 @@ void add_static_pixels(t_game *game, char* filename)
 	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
 }
 
+bool is_wall(mlx_image_t *image, int x, int y) {
+    if (x < 0 || y < 0 || x >= (int)image->width || y >= (int)image->height) {
+        return true; // Out of bounds is treated as a wall
+    }
+    uint32_t color = ((uint32_t *)image->pixels)[y * image->width + x];
+    return (color == 0xFFFFFFFF); // Check if the pixel is white
+}
+
+bool check_collision(t_game *game, int new_x, int new_y) {
+    for (int y = 0; y < CUBE_SIZE; y++) {
+        for (int x = 0; x < CUBE_SIZE; x++) {
+            if (is_wall(game->static_layer, new_x + x, new_y + y)) {
+                return true; // Collision detected
+            }
+        }
+    }
+    return false; // No collision
+}
+
 void keys_hook(mlx_key_data_t keydata, void* param)
 {
-    t_game* game = (t_game*)param;
+    t_game *game = (t_game *)param;
+    int new_x = game->pos_x;
+    int new_y = game->pos_y;
 
-    // Move the cube based on key input
-	if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		game->pos_y -= 10; // Move up
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		game->pos_y += 10; // Move down
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		game->pos_x -= 10; // Move left
-	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		game->pos_x += 10; // Move right
+    // Calculate new position based on key input
+    if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        new_y -= 10; // Move up
+    else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        new_y += 10; // Move down
+    else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        new_x -= 10; // Move left
+    else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        new_x += 10; // Move right
 
-    // Ensure the cube stays within the window bounds
-    if (game->pos_x < 0) game->pos_x = 0;
-    if (game->pos_y < 0) game->pos_y = 0;
-    if (game->pos_x > WIDTH - CUBE_SIZE) game->pos_x = WIDTH - CUBE_SIZE;
-    if (game->pos_y > HEIGHT - CUBE_SIZE) game->pos_y = HEIGHT - CUBE_SIZE;
+    // Check for collision before updating position
+    if (!check_collision(game, new_x, new_y))
+	{
+        game->pos_x = new_x;
+        game->pos_y = new_y;
+    }
 }
 
 // Main entry point: sets up game, parses file, starts MLX42
