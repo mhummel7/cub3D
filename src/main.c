@@ -112,11 +112,11 @@ void add_static_pixels(t_game *game, char* filename)
 	int fd = open(filename, O_RDONLY);
 	char *str = get_next_line(fd);
 	int add_y = 1;
-	int x = 0;
 	int base_x_mult = base_x;
 	int base_y_mult = 30;
 	while(str)
 	{
+		int x = 0;
 		while(str[x] != '\n')
 		{
 			if (str[x] == '1')
