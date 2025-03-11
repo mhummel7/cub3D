@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 09:57:50 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/05 14:25:07 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/11 09:24:03 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,27 @@ int	check_collision(t_game *game, double new_x, double new_y)
 static void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
-	double	move_speed;
-	double	rot_speed;
 
 	game = (t_game *)param;
-	move_speed = 0.1; // movement speed(can change that if its to fast or to slow we will see)
-	rot_speed = 0.05; // rotation speed, can also be changed
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
-	handle_movement(game, keydata, move_speed);
-	handle_strafe(game, keydata, move_speed);
-	handle_rotation(game, keydata, rot_speed);
-	printf("Pos: (%.2f, %.2f), Dir: (%.2f, %.2f)\n", game->pos_x, game->pos_y,
-		game->dir_x, game->dir_y); // shows the position and direction of the player in the console
+}
+
+// Updates player position (walking and watching around) every frame
+static void	loop_hook(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	double move_speed = 0.05; // Movement speed per frame
+	double rot_speed = 0.05; // Rotation speed per frame
+	double old_x = game->pos_x; // only for debug message
+	double old_y = game->pos_y; // only for debug message
+	double old_dir_x = game->dir_x; //only for debug message
+	update_player(game, move_speed, rot_speed); // Handle movement in mlx_utils.c
+	if (old_x != game->pos_x || old_y != game->pos_y || old_dir_x != game->dir_x) // only for debug message
+		printf("Pos: (%.2f, %.2f), Dir: (%.2f, %.2f)\n",
+			game->pos_x, game->pos_y, game->dir_x, game->dir_y);
 }
 
 // Main entry point: sets up game, parses file, starts MLX42
@@ -73,6 +81,7 @@ static void	key_hook(mlx_key_data_t keydata, void *param)
 int	main(int argc, char **argv)
 {
 	t_game game;
+
 	if (argc != 2 || !ft_strrchr(argv[1], '.') || ft_strcmp(ft_strrchr(argv[1], '.'), ".cub"))
 		error_exit("Usage: ./cub3D <map.cub>"); // checks if the file is a .cub file and the number of arguments
 	init_game(&game); // initializes game struct
@@ -87,6 +96,8 @@ int	main(int argc, char **argv)
 	printf("Setting key hook...\n");
 	mlx_key_hook(game.mlx, key_hook, &game); // sets up key handling
 	printf("Entering MLX loop...\n");
+	mlx_loop_hook(game.mlx, loop_hook, &game); // sets up loop hook for walking etc
+	printf("Entering loop hook...\n");
 	mlx_loop(game.mlx); // starts MLX42 event loop
 	printf("Terminating MLX42...\n");
 	mlx_terminate(game.mlx); // cleans up mlx42 resources
