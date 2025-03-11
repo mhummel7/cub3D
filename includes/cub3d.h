@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 09:54:21 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/11 09:15:51 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/11 11:31:21 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ typedef struct s_game
 	char *so_texture; // South texture path
 	char *we_texture; // West texture path
 	char *ea_texture; // East texture path
+	mlx_texture_t *no_tex; // Loaded North texture
+	mlx_texture_t *so_tex; // Loaded South texture
+	mlx_texture_t *we_tex; // Loaded West texture
+	mlx_texture_t *ea_tex; // Loaded East texture
 	int floor_color;
 	int ceiling_color;
 	char **map;
