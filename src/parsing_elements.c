@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:27:50 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/06 12:42:01 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/11 11:29:14 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,42 @@ int	get_rgb(char *line)
 
 static void	set_texture(t_game *game, char *id, char *value)
 {
+	int fd = open(value, O_RDONLY);
+	if (fd < 0)
+		error_exit("Texture file not found");
+	close(fd);
 	if (ft_strcmp(id, "NO") == 0)
-	{
-		game->no_texture = ft_strdup(value);
-		printf("Allocated no_texture: %p\n", game->no_texture);
-	}
-	else if (ft_strcmp(id, "SO") == 0)
-	{
-		game->so_texture = ft_strdup(value);
-		printf("Allocated so_texture: %p\n", game->so_texture);
-	}
-	else if (ft_strcmp(id, "WE") == 0)
-	{
-		game->we_texture = ft_strdup(value);
-		printf("Allocated we_texture: %p\n", game->we_texture);
-	}
-	else if (ft_strcmp(id, "EA") == 0)
-	{
-		game->ea_texture = ft_strdup(value);
-		printf("Allocated ea_texture: %p\n", game->ea_texture);
-	}
+    {
+        game->no_texture = ft_strdup(value);
+        game->no_tex = mlx_load_png(value);
+        if (!game->no_tex)
+            error_exit("Failed to load NO texture");
+        printf("Allocated no_texture: %p, Loaded no_tex: %p\n", game->no_texture, game->no_tex);
+    }
+    else if (ft_strcmp(id, "SO") == 0)
+    {
+        game->so_texture = ft_strdup(value);
+        game->so_tex = mlx_load_png(value);
+        if (!game->so_tex)
+            error_exit("Failed to load SO texture");
+        printf("Allocated so_texture: %p, Loaded so_tex: %p\n", game->so_texture, game->so_tex);
+    }
+    else if (ft_strcmp(id, "WE") == 0)
+    {
+        game->we_texture = ft_strdup(value);
+        game->we_tex = mlx_load_png(value);
+        if (!game->we_tex)
+            error_exit("Failed to load WE texture");
+        printf("Allocated we_texture: %p, Loaded we_tex: %p\n", game->we_texture, game->we_tex);
+    }
+    else if (ft_strcmp(id, "EA") == 0)
+    {
+        game->ea_texture = ft_strdup(value);
+        game->ea_tex = mlx_load_png(value);
+        if (!game->ea_tex)
+            error_exit("Failed to load EA texture");
+        printf("Allocated ea_texture: %p, Loaded ea_tex: %p\n", game->ea_texture, game->ea_tex);
+    }
 	else
 		error_exit("Unknown element identifier");
 }
