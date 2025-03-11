@@ -117,7 +117,7 @@ void add_static_pixels(t_game *game, char* filename)
 	while(str)
 	{
 		int x = 0;
-		while(str[x] != '\n')
+		while(str[x] != '\n' && str[x] != '\0')
 		{
 			if (str[x] == '1')
 				for (int y = 0; y < CUBE_SIZE; y++) {
