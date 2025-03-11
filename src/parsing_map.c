@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:28:22 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/06 12:37:53 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/11 09:21:40 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	parse_map(t_game *game, char *line, int fd)
 	game->map[i] = NULL;
 	game->map_width = 0;
 	set_map_width(game);
-	validate_map(game); // still have to do
+	validate_map(game);
 }
 
 static void	handle_line(char *line, t_game *game, int *map_started, int fd)
@@ -78,13 +78,13 @@ static void	handle_line(char *line, t_game *game, int *map_started, int fd)
 			return ;
 		*map_started = 2;
 	}
-	else if (is_map_line(line) && !*map_started) // still have to do
+	else if (is_map_line(line) && !*map_started)
 	{
 		*map_started = 1;
 		parse_map(game, line, fd);
 	}
 	else if (!*map_started)
-		parse_element(game, line); // still have to do
+		parse_element(game, line);
 }
 
 void	parse_cub_file(char *filename, t_game *game)
