@@ -92,8 +92,8 @@ void render(void* param)
     memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width * game->dynamic_layer->height * sizeof(int32_t));
 
     // Draw the cube (a rectangle) at its current position
-    for (int y = 0; y < CUBE_SIZE; y++) {
-        for (int x = 0; x < CUBE_SIZE; x++) {
+    for (int y = 0; y < MOVING_OBJECT_SIZE; y++) {
+        for (int x = 0; x < MOVING_OBJECT_SIZE; x++) {
             mlx_put_pixel(game->dynamic_layer, game->pos_x + x, game->pos_y + y, 0xFF0000FF); // Red color
         }
     }
@@ -151,8 +151,8 @@ bool is_wall(mlx_image_t *image, int x, int y) {
 }
 
 bool check_collision(t_game *game, int new_x, int new_y) {
-    for (int y = 0; y < CUBE_SIZE; y++) {
-        for (int x = 0; x < CUBE_SIZE; x++) {
+    for (int y = 0; y < MOVING_OBJECT_SIZE; y++) {
+        for (int x = 0; x < MOVING_OBJECT_SIZE; x++) {
             if (is_wall(game->static_layer, new_x + x, new_y + y)) {
                 return true; // Collision detected
             }

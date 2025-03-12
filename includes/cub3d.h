@@ -25,6 +25,7 @@
 # define WIDTH		1920
 # define HEIGHT		1080
 # define CUBE_SIZE  30
+# define MOVING_OBJECT_SIZE 10
 
 typedef struct s_game
 {
