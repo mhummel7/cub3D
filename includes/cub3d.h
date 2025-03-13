@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 09:54:21 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/11 11:31:21 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/13 11:43:40 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,17 @@
 #include <unistd.h>
 #include <math.h>
 
+# define WIDTH		1920
+# define HEIGHT		1080
+# define CUBE_SIZE  30
+# define MOVING_OBJECT_SIZE 10
+
 typedef struct s_game
 {
-	char *no_texture; // North texture path
-	char *so_texture; // South texture path
-	char *we_texture; // West texture path
-	char *ea_texture; // East texture path
+	char *no_texture;
+	char *so_texture;
+	char *we_texture;
+	char *ea_texture;
 	mlx_texture_t *no_tex; // Loaded North texture
 	mlx_texture_t *so_tex; // Loaded South texture
 	mlx_texture_t *we_tex; // Loaded West texture
@@ -42,7 +47,8 @@ typedef struct s_game
 	double dir_x;
 	double dir_y;
 	mlx_t *mlx;
-	mlx_image_t *img; // For rendering
+	mlx_image_t *static_layer;
+	mlx_image_t *dynamic_layer; // For rendering
 } t_game;
 
 // parsing_elements.c
@@ -62,7 +68,7 @@ int is_map_line(char *line);
 int is_valid_char(char c);
 
 // utils.c
-void error_exit(char *msg);
+void error_exit(const char *message);
 void strip_newline(char *line);
 
 // free.c
@@ -70,7 +76,7 @@ void free_game(t_game *game);
 
 // main.c
 void init_game(t_game *game);
-int check_collision(t_game *game, double new_x, double new_y);
+bool check_collision(t_game *game, int new_x, int new_y);
 
 // mlx_utils.c
 void handle_movement(t_game *game, mlx_key_data_t keydata, double move_speed);
