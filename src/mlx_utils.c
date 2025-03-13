@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:41:05 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/11 09:22:23 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/13 11:43:31 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,11 @@ void	handle_rotation(t_game *game, mlx_key_data_t keydata, double rot_speed)
 	}
 }
 
-void	init_mlx(t_game *game)
+void init_mlx(t_game *game)
 {
-	printf("Creating MLX instance...\n");
-	game->mlx = mlx_init(800, 600, "cub3D", false);
-	if (!game->mlx)
-		error_exit("Failed to initialize MLX42");
-	printf("Creating image: %p\n", game->img);
-	game->img = mlx_new_image(game->mlx, 800, 600);
-	if (!game->img)
-		error_exit("Failed to create image");
-	printf("Image created: %p\n", game->img);
+	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
+	game->dynamic_layer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->static_layer = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 }
 
 // Updates player based on held keys
