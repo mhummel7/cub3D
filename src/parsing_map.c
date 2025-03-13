@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:28:22 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/11 09:21:40 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/13 11:54:38 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	parse_cub_file(char *filename, t_game *game)
 		free(line);
 	close(fd);
 	if (!game->no_texture || !game->so_texture || !game->we_texture
-		|| !game->ea_texture || game->floor_color == -1
-		|| game->ceiling_color == -1 || !game->map)
+		|| !game->ea_texture || !game->map)
 		error_exit("Missing required elements");
 }
