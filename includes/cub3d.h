@@ -49,6 +49,10 @@ typedef struct s_game
 	mlx_t *mlx;
 	mlx_image_t *static_layer;
 	mlx_image_t *dynamic_layer; // For rendering
+	float ray_dir_x; // Ray direction vector
+    float ray_dir_y;
+    float plane_x;   // Camera plane (for FOV)
+    float plane_y;
 } t_game;
 
 // parsing_elements.c
