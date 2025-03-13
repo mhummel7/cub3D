@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 09:57:50 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/13 11:46:01 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:03:37 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void	add_static_pixels(t_game *game, char *filename)
 		add_y++;
 		base_x_mult = 30;
 		base_y_mult = base_y * add_y;
+		free(str);
 		str = get_next_line(fd);
 	}
 	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
@@ -227,6 +228,9 @@ int	main(int argc, char **argv)
 	printf("Freeing game...\n");
 	free_game(&game); // free game struct memory
 	printf("Done.\n");
+
+	system("leaks cub3D"); // Check for memory leaks
+
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:54:17 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/13 11:27:28 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:02:37 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	free_game(t_game *game)
 	if (game->map)
 	{
 		i = 0;
-		while (i < game->map_height)
+		while (game->map[i])
 		{
 			printf("Freeing map[%d]: %p\n", i, game->map[i]); // Debug message
-			if (game->map[i])
-				free(game->map[i]);
+			free(game->map[i]);
 			i++;
 		}
 		printf("Freeing map array: %p\n", game->map); // Debug message
