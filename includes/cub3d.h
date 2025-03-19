@@ -89,4 +89,10 @@ void handle_rotation(t_game *game, mlx_key_data_t keydata, double rot_speed);
 void init_mlx(t_game *game);
 void update_player(t_game *game, double move_speed, double rot_speed);
 
+//add_static_objects.c
+void add_static_pixels(t_game *game);
+void process_map_row(t_game *game, int i, int *base_x_mult, int *base_y_mult);
+void set_player_location(t_game *game, int base_x_mult, int base_y_mult, char cell);
+void draw_walls(t_game *game, int base_x_mult, int base_y_mult);
+
 #endif
