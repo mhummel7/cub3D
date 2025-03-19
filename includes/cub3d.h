@@ -26,6 +26,13 @@
 # define HEIGHT		1960
 # define CUBE_SIZE  20
 # define MOVING_OBJECT_SIZE 5
+# define PI 3.14159265358979323846
+
+typedef struct s_vector
+{
+	float	x;
+	float	y;
+}	t_vector;
 
 typedef struct s_game
 {
@@ -39,20 +46,17 @@ typedef struct s_game
 	mlx_texture_t *ea_tex; // Loaded East texture
 	int floor_color;
 	int ceiling_color;
+	float player_angle;
+	t_vector		pos_player;
+	t_vector		dir_player;
+	t_vector		ray_dir;
+	t_vector		plane;
 	char **map;
 	int map_height;
 	int map_width;
-	double pos_x;
-	double pos_y;
-	double dir_x;
-	double dir_y;
 	mlx_t *mlx;
 	mlx_image_t *static_layer;
 	mlx_image_t *dynamic_layer; // For rendering
-	float ray_dir_x; // Ray direction vector
-    float ray_dir_y;
-    float plane_x;   // Camera plane (for FOV)
-    float plane_y;
 } t_game;
 
 // parsing_elements.c
@@ -85,9 +89,7 @@ bool check_collision(t_game *game, int new_x, int new_y);
 // mlx_utils.c
 void handle_movement(t_game *game, mlx_key_data_t keydata, double move_speed);
 void handle_strafe(t_game *game, mlx_key_data_t keydata, double move_speed);
-void handle_rotation(t_game *game, mlx_key_data_t keydata, double rot_speed);
 void init_mlx(t_game *game);
-void update_player(t_game *game, double move_speed, double rot_speed);
 
 //add_static_objects.c
 void add_static_pixels(t_game *game);

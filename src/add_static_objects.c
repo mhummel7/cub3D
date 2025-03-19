@@ -30,13 +30,27 @@ void draw_walls(t_game *game, int base_x_mult, int base_y_mult)
     }
 }
 
+void	assigne_angle_dir(t_game *game, float angle, float x, float y)
+{
+	game->player_angle = angle;
+	game->plane.x = x;
+	game->plane.y = y;
+}
+
 void set_player_location(t_game *game, int base_x_mult, int base_y_mult, char cell)
 {
-    if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
-    {
-        game->pos_x = base_x_mult;
-        game->pos_y = base_y_mult;
-    }
+    game->pos_player.x = base_x_mult;
+    game->pos_player.y = base_y_mult;
+    if (cell == 'N')
+		assigne_angle_dir(game, 3 * PI / 2, 0.66, 0);
+	else if (cell == 'E')
+		assigne_angle_dir(game, 0, 0, 0.66);
+	else if (cell == 'S')
+		assigne_angle_dir(game, PI / 2, -0.66, 0);
+	else if (cell == 'W')
+		assigne_angle_dir(game, PI, 0, -0.66);
+	game->dir_player.x = cos(game->player_angle);
+	game->dir_player.y = sin(game->player_angle);
 }
 
 void process_map_row(t_game *game, int i, int *base_x_mult, int *base_y_mult)

@@ -40,27 +40,27 @@ void	set_player_position(t_game *game, int i, int j, int *player_count)
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		(*player_count)++;
-		game->pos_x = j + 0.5;
-		game->pos_y = i + 0.5;
+		game->pos_player.x = j + 0.5;
+		game->pos_player.y = i + 0.5;
 		if (c == 'N')
 		{
-			game->dir_x = 0;
-			game->dir_y = -1;
+			game->dir_player.x = 0;
+			game->dir_player.y = -1;
 		}
 		else if (c == 'S')
 		{
-			game->dir_x = 0;
-			game->dir_y = 1;
+			game->dir_player.x = 0;
+			game->dir_player.y = 1;
 		}
 		else if (c == 'E')
 		{
-			game->dir_x = 1;
-			game->dir_y = 0;
+			game->dir_player.x = 1;
+			game->dir_player.y = 0;
 		}
 		else if (c == 'W')
 		{
-			game->dir_x = -1;
-			game->dir_y = 0;
+			game->dir_player.x = -1;
+			game->dir_player.y = 0;
 		}
 	}
 }

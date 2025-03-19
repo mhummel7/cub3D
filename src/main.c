@@ -24,17 +24,17 @@ void	init_game(t_game *game)
 	game->map = NULL;
 	game->map_height = 0;
 	game->map_width = 0;
-	game->pos_x = -1;
-	game->pos_y = -1;
-	game->dir_x = 0;
-	game->dir_y = 0;
+	game->pos_player.x = -1;
+	game->pos_player.y = -1;
+	game->dir_player.x = 0;
+	game->dir_player.y = 0;
 	game->mlx = NULL;
 	game->dynamic_layer = NULL;
 	game->static_layer = NULL;
-	game->ray_dir_x = -1.0f; // Initial ray direction (facing left)
-    game->ray_dir_y = 0.0f;
-    game->plane_x = 0.0f;    // Initial camera plane (for FOV)
-    game->plane_y = 0.66f;
+	game->ray_dir.x = -1.0f; // Initial ray direction (facing left)
+    game->ray_dir.y = 0.0f;
+    game->plane.x = 0.0f;    // Initial camera plane (for FOV)
+    game->plane.y = 0.66f;
 }
 
 void draw_line(mlx_image_t *image, int x0, int y0, int x1, int y1, uint32_t color)
@@ -72,8 +72,8 @@ void render(void *param)
 
     // Draw the player (red dot) using your existing circle-drawing code
     int radius = MOVING_OBJECT_SIZE / 2;
-    int center_x = game->pos_x + radius;
-    int center_y = game->pos_y + radius;
+    int center_x = game->pos_player.x + radius;
+    int center_y = game->pos_player.y + radius;
 
     // Midpoint circle algorithm (filled circle)
     int x = radius;
@@ -106,8 +106,8 @@ void render(void *param)
     }
 
     // Draw the ray (green line)
-    int ray_end_x = game->pos_x + game->ray_dir_x * 200; // Extend ray by 100 units
-    int ray_end_y = game->pos_y + game->ray_dir_y * 200;
+    int ray_end_x = game->pos_player.x + game->ray_dir.x * 200; // Extend ray by 100 units
+    int ray_end_y = game->pos_player.y + game->ray_dir.y * 200;
     draw_line(game->dynamic_layer, center_x, center_y, ray_end_x, ray_end_y, 0x00FF00FF); // Green color
 
     // Render the image to the window
@@ -158,34 +158,34 @@ void keys_hook(mlx_key_data_t keydata, void *param)
     if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
     {
         // Move forward in the direction of the ray
-        int new_x = game->pos_x + game->ray_dir_x * move_speed;
-        int new_y = game->pos_y + game->ray_dir_y * move_speed;
+        int new_x = game->pos_player.x + game->ray_dir.x * move_speed;
+        int new_y = game->pos_player.y + game->ray_dir.y * move_speed;
         if (!check_collision(game, new_x, new_y))
         {
-            game->pos_x = new_x;
-            game->pos_y = new_y;
+            game->pos_player.x = new_x;
+            game->pos_player.y = new_y;
         }
     }
     else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
     {
         // Move backward
-        int new_x = game->pos_x - game->ray_dir_x * move_speed;
-        int new_y = game->pos_y - game->ray_dir_y * move_speed;
+        int new_x = game->pos_player.x - game->ray_dir.x * move_speed;
+        int new_y = game->pos_player.y - game->ray_dir.y * move_speed;
         if (!check_collision(game, new_x, new_y))
         {
-            game->pos_x = new_x;
-            game->pos_y = new_y;
+            game->pos_player.x = new_x;
+            game->pos_player.y = new_y;
         }
     }
     else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
     {
-        rotate_vector(&game->ray_dir_x, &game->ray_dir_y, -rot_speed);
-        rotate_vector(&game->plane_x, &game->plane_y, -rot_speed);
+        rotate_vector(&game->ray_dir.x, &game->ray_dir.y, -rot_speed);
+        rotate_vector(&game->plane.x, &game->plane.y, -rot_speed);
     }
     else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
     {
-        rotate_vector(&game->ray_dir_x, &game->ray_dir_y, rot_speed);
-        rotate_vector(&game->plane_x, &game->plane_y, rot_speed);
+        rotate_vector(&game->ray_dir.x, &game->ray_dir.y, rot_speed);
+        rotate_vector(&game->plane.x, &game->plane.y, rot_speed);
     }
     else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
     {
