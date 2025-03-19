@@ -37,180 +37,153 @@ void	init_game(t_game *game)
     game->plane.y = 0.66f;
 }
 
-void draw_line(mlx_image_t *image, int x0, int y0, int x1, int y1, uint32_t color)
+int	is_coliding(t_game *game, float x, float y)
 {
-    int dx = abs(x1 - x0);
-    int dy = abs(y1 - y0);
-    int sx = (x0 < x1) ? 1 : -1;
-    int sy = (y0 < y1) ? 1 : -1;
-    int err = dx - dy;
+	float	pr;
 
-    while (1)
-    {
-        mlx_put_pixel(image, x0, y0, color);
-        if (x0 == x1 && y0 == y1) break;
-        int e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err -= dy;
-            x0 += sx;
-        }
-        if (e2 < dx)
-        {
-            err += dx;
-            y0 += sy;
-        }
-    }
+	pr = 0.2;
+	return (game->map[(int)(y + pr)][(int)(x + pr)] == '1' ||
+		game->map[(int)(y + pr)][(int)(x - pr)] == '1' ||
+		game->map[(int)(y - pr)][(int)(x + pr)] == '1' ||
+		game->map[(int)(y - pr)][(int)(x - pr)] == '1');
+}
+
+void	rotation(t_game *game, float angle)
+{
+	float		old_plane_x;
+	t_vector	dir;
+
+	dir.x = game->dir_player.x * cos(angle) - game->dir_player.y * sin(angle);
+	dir.y = game->dir_player.x * sin(angle) + game->dir_player.y * cos(angle);
+	game->dir_player = dir;
+	old_plane_x = game->plane.x;
+	game->plane.x = game->plane.x * cos(angle) - game->plane.y * sin(angle);
+	game->plane.y = old_plane_x * sin(angle) + game->plane.y * cos(angle);
+}
+
+void	update_position(t_game *game, float next_x, float next_y, int dir)
+{
+	if (dir == X_DIR)
+	{
+		game->pos_player.x = next_x;
+	}
+	else if (dir == Y_DIR)
+	{
+		game->pos_player.y = next_y;
+	}
+}
+
+void	side_dir(t_game *game, int sideways, float *move_x, float *move_y)
+{
+	if (sideways)
+	{
+		*move_x = game->dir_player.y;
+		*move_y = -game->dir_player.x;
+	}
+	else
+	{
+		*move_x = game->dir_player.x;
+		*move_y = game->dir_player.y;
+	}
+}
+
+void	two_keys_pressed(t_game *game, float *speed)
+{
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W)
+		|| mlx_is_key_down(game->mlx, MLX_KEY_S))
+	{
+		if (mlx_is_key_down(game->mlx, MLX_KEY_D)
+			|| mlx_is_key_down(game->mlx, MLX_KEY_A))
+			*speed /= 2;
+	}
+}
+
+void	movement(t_game *game, float speed, int sideways)
+{
+	float	next_x;
+	float	next_y;
+	float	move_x;
+	float	move_y;
+
+	side_dir(game, sideways, &move_x, &move_y);
+	two_keys_pressed(game, &speed);
+	next_x = game->pos_player.x + move_x * speed;
+	next_y = game->pos_player.y + move_y * speed;
+	if (!is_coliding(game, next_x, game->pos_player.y))
+		update_position(game, next_x, game->pos_player.y, X_DIR);
+	if (!is_coliding(game, game->pos_player.x, next_y))
+		update_position(game, game->pos_player.x, next_y, Y_DIR);
+}
+
+void	handling_key_input(void *param)
+{
+	t_game	*game;
+
+	game = param;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+	{
+		mlx_terminate(game->mlx);
+    	free_game(game);
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+		movement(game, 0.07, 0);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+		movement(game, -0.07, 0);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+		movement(game, 0.07, 1);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+		movement(game, -0.07, 1);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+		rotation(game, -0.05);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+		rotation(game, 0.05);
+}
+
+void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)
+{
+	int	x;
+	int	y;
+
+	if (height == HEIGHT)
+		y = height / 2;
+	else
+		y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			if (y >= 0 && y < height && x >= 0 && x < width)
+				mlx_put_pixel(img, x, y, colour);
+			x++;
+		}
+		y++;
+	}
 }
 
 void render(void *param)
 {
     t_game *game = (t_game *)param;
 
-    // Clear the image with a color (e.g., black)
-    memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width * game->dynamic_layer->height * sizeof(int32_t));
-
-    // Draw the player (red dot) using your existing circle-drawing code
-    int radius = MOVING_OBJECT_SIZE / 2;
-    int center_x = game->pos_player.x + radius;
-    int center_y = game->pos_player.y + radius;
-
-    // Midpoint circle algorithm (filled circle)
-    int x = radius;
-    int y = 0;
-    int p = 1 - radius; // Decision parameter
-    while (x >= y)
-    {
-        // Draw horizontal lines to fill the circle
-        for (int i = -x; i <= x; i++)
-        {
-            mlx_put_pixel(game->dynamic_layer, center_x + i, center_y + y, 0xFF0000FF); // Red color
-            mlx_put_pixel(game->dynamic_layer, center_x + i, center_y - y, 0xFF0000FF);
-        }
-        for (int i = -y; i <= y; i++)
-        {
-            mlx_put_pixel(game->dynamic_layer, center_x + i, center_y + x, 0xFF0000FF);
-            mlx_put_pixel(game->dynamic_layer, center_x + i, center_y - x, 0xFF0000FF);
-        }
-        y++;
-        // Update the decision parameter
-        if (p <= 0)
-        {
-            p = p + 2 * y + 1;
-        }
-        else
-        {
-            x--;
-            p = p + 2 * y - 2 * x + 1;
-        }
-    }
-
-    // Draw the ray (green line)
-    int ray_end_x = game->pos_player.x + game->ray_dir.x * 200; // Extend ray by 100 units
-    int ray_end_y = game->pos_player.y + game->ray_dir.y * 200;
-    draw_line(game->dynamic_layer, center_x, center_y, ray_end_x, ray_end_y, 0x00FF00FF); // Green color
-
-    // Render the image to the window
-    mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
+    handling_key_input(game);
+    reset_img(game->width, game->height / 2, game->floor_color, game->wall_image);
+	reset_img(game->width, game->height, game->ceiling_color, game->wall_image);
 }
 
-bool	is_wall(mlx_image_t *image, int x, int y)
+int main(int argc, char **argv)
 {
-	uint32_t	color;
+    t_game game;
 
-	if (x < 0 || y < 0 || x >= (int)image->width || y >= (int)image->height)
-	{
-		return (true); // Out of bounds is treated as a wall
-	}
-	color = ((uint32_t *)image->pixels)[y * image->width + x];
-	return (color == 0xFFFFFFFF); // Check if the pixel is white
-}
-
-bool	check_collision(t_game *game, int new_x, int new_y)
-{
-	for (int y = 0; y < MOVING_OBJECT_SIZE; y++)
-	{
-		for (int x = 0; x < MOVING_OBJECT_SIZE; x++)
-		{
-			if (is_wall(game->static_layer, new_x + x, new_y + y))
-			{
-				return (true); // Collision detected
-			}
-		}
-	}
-	return (false); // No collision
-}
-
-void rotate_vector(float *x, float *y, float angle)
-{
-    float old_x = *x;
-    float old_y = *y;
-    *x = old_x * cos(angle) - old_y * sin(angle);
-    *y = old_x * sin(angle) + old_y * cos(angle);
-}
-
-void keys_hook(mlx_key_data_t keydata, void *param)
-{
-    t_game *game = (t_game *)param;
-    float move_speed = 0.1f; // Movement speed
-    float rot_speed = 0.1f;  // Rotation speed
-
-    if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        // Move forward in the direction of the ray
-        int new_x = game->pos_player.x + game->ray_dir.x * move_speed;
-        int new_y = game->pos_player.y + game->ray_dir.y * move_speed;
-        if (!check_collision(game, new_x, new_y))
-        {
-            game->pos_player.x = new_x;
-            game->pos_player.y = new_y;
-        }
-    }
-    else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        // Move backward
-        int new_x = game->pos_player.x - game->ray_dir.x * move_speed;
-        int new_y = game->pos_player.y - game->ray_dir.y * move_speed;
-        if (!check_collision(game, new_x, new_y))
-        {
-            game->pos_player.x = new_x;
-            game->pos_player.y = new_y;
-        }
-    }
-    else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        rotate_vector(&game->ray_dir.x, &game->ray_dir.y, -rot_speed);
-        rotate_vector(&game->plane.x, &game->plane.y, -rot_speed);
-    }
-    else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        rotate_vector(&game->ray_dir.x, &game->ray_dir.y, rot_speed);
-        rotate_vector(&game->plane.x, &game->plane.y, rot_speed);
-    }
-    else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-    {
-        mlx_close_window(game->mlx);
-    }
-}
-
-// Main entry point: sets up game, parses file, starts MLX42
-// a lot of debug messages to test it because i was having problems getting it started
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-	if (argc != 2 || !ft_strrchr(argv[1], '.') || ft_strcmp(ft_strrchr(argv[1],
-				'.'), ".cub"))
-		error_exit("Usage: ./cub3D <map.cub>");
-	init_game(&game);
-	parse_cub_file(argv[1], &game);
-	init_mlx(&game);
-	add_static_pixels(&game);
-	mlx_key_hook(game.mlx, keys_hook, &game);
-	mlx_loop_hook(game.mlx, render, &game);
-	mlx_loop(game.mlx);
-	mlx_terminate(game.mlx);
-	free_game(&game);
-	printf("Done.\n");
-	return (0);
+    if (argc != 2 || !ft_strrchr(argv[1], '.') || ft_strcmp(ft_strrchr(argv[1], '.'), ".cub"))
+        error_exit("Usage: ./cub3D <map.cub>");
+    init_game(&game);
+    parse_cub_file(argv[1], &game);
+    init_mlx(&game);
+    add_static_pixels(&game);
+    mlx_loop_hook(game.mlx, render, &game);
+    mlx_loop(game.mlx);
+    mlx_terminate(game.mlx);
+    free_game(&game);
+    printf("Done.\n");
+    return (0);
 }

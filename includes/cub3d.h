@@ -28,6 +28,12 @@
 # define MOVING_OBJECT_SIZE 5
 # define PI 3.14159265358979323846
 
+typedef enum e_dir
+{
+	X_DIR,
+	Y_DIR,
+}	t_dir;
+
 typedef struct s_vector
 {
 	float	x;
@@ -40,6 +46,7 @@ typedef struct s_game
 	char *so_texture;
 	char *we_texture;
 	char *ea_texture;
+	mlx_image_t	*wall_image;
 	mlx_texture_t *no_tex; // Loaded North texture
 	mlx_texture_t *so_tex; // Loaded South texture
 	mlx_texture_t *we_tex; // Loaded West texture
@@ -47,6 +54,8 @@ typedef struct s_game
 	int floor_color;
 	int ceiling_color;
 	float player_angle;
+	int width;
+	int height;
 	t_vector		pos_player;
 	t_vector		dir_player;
 	t_vector		ray_dir;
@@ -84,11 +93,8 @@ void free_game(t_game *game);
 
 // main.c
 void init_game(t_game *game);
-bool check_collision(t_game *game, int new_x, int new_y);
 
 // mlx_utils.c
-void handle_movement(t_game *game, mlx_key_data_t keydata, double move_speed);
-void handle_strafe(t_game *game, mlx_key_data_t keydata, double move_speed);
 void init_mlx(t_game *game);
 
 //add_static_objects.c
