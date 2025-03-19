@@ -202,30 +202,15 @@ int	main(int argc, char **argv)
 	if (argc != 2 || !ft_strrchr(argv[1], '.') || ft_strcmp(ft_strrchr(argv[1],
 				'.'), ".cub"))
 		error_exit("Usage: ./cub3D <map.cub>");
-			// checks if the file is a .cub file and the number of arguments
-	init_game(&game);                           // initializes game struct
-	printf("Parsing file...\n");
-	parse_cub_file(argv[1], &game); // parses the cub file
-	printf("Initializing MLX42...\n");
-	init_mlx(&game); // initializes MLX42
-	printf("Drawing pixel...\n");
+	init_game(&game);
+	parse_cub_file(argv[1], &game);
+	init_mlx(&game);
 	add_static_pixels(&game);
-	printf("Displaying image...\n");
-	printf("Setting key hook...\n");
 	mlx_key_hook(game.mlx, keys_hook, &game);
-	printf("Entering MLX loop...\n");
-	mlx_loop_hook(game.mlx, render, &game); // sets up loop hook for walking etc
-	printf("Entering loop hook...\n");
-	mlx_loop(game.mlx); // starts MLX42 event loop
-	printf("Terminating MLX42...\n");
-	mlx_terminate(game.mlx); // cleans up mlx42 resources
-	printf("Freeing game...\n");
-	free_game(&game); // free game struct memory
+	mlx_loop_hook(game.mlx, render, &game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
+	free_game(&game);
 	printf("Done.\n");
-
-    //system("leaks cub3D"); // Check for memory leaks
-
 	return (0);
 }
-
-// should be finished im looking more into it tomorrow
