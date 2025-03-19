@@ -22,10 +22,10 @@
 #include <unistd.h>
 #include <math.h>
 
-# define WIDTH		1920
-# define HEIGHT		1080
-# define CUBE_SIZE  30
-# define MOVING_OBJECT_SIZE 10
+# define WIDTH		2580
+# define HEIGHT		1960
+# define CUBE_SIZE  20
+# define MOVING_OBJECT_SIZE 5
 
 typedef struct s_game
 {

@@ -114,31 +114,24 @@ void render(void *param)
     mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
 }
 
-void	add_static_pixels(t_game *game, char *filename)
+void	add_static_pixels(t_game *game)
 {
-	int		base_x;
-	int		base_y;
-	int		fd;
-	char	*str;
 	int		add_y;
 	int		base_x_mult;
 	int		base_y_mult;
 	int		x;
+    int     i;
 
-	base_x = 30;
-	base_y = 30;
-	(void)game;
-	fd = open(filename, O_RDONLY);
-	str = get_next_line(fd);
 	add_y = 1;
-	base_x_mult = base_x;
-	base_y_mult = 30;
-	while (str)
+	base_x_mult = CUBE_SIZE;
+	base_y_mult = CUBE_SIZE;
+    i = 0;
+	while (i < game->map_height)
 	{
 		x = 0;
-		while (str[x] != '\n' && str[x] != '\0')
+		while (game->map[i][x])
 		{
-			if (str[x] == '1')
+			if (game->map[i][x] == '1')
 				for (int y = 0; y < CUBE_SIZE; y++)
 				{
 					for (int x = 0; x < CUBE_SIZE; x++)
@@ -147,20 +140,19 @@ void	add_static_pixels(t_game *game, char *filename)
 							base_y_mult + y, 0xFFFFFFFF); // White color
 					}
 				}
-			else if (str[x] == 'N' || str[x] == 'S' || str[x] == 'E'
-				|| str[x] == 'W')
+			else if (game->map[i][x] == 'N' || game->map[i][x] == 'S' || game->map[i][x] == 'E'
+				|| game->map[i][x] == 'W')
 			{
 				game->pos_x = base_x_mult;
 				game->pos_y = base_y_mult;
 			}
-			base_x_mult += 30;
+			base_x_mult += CUBE_SIZE;
 			x++;
 		}
 		add_y++;
-		base_x_mult = 30;
-		base_y_mult = base_y * add_y;
-		free(str);
-		str = get_next_line(fd);
+		base_x_mult = CUBE_SIZE;
+		base_y_mult = CUBE_SIZE * add_y;
+		i++;
 	}
 	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
 }
@@ -260,7 +252,7 @@ int	main(int argc, char **argv)
 	printf("Initializing MLX42...\n");
 	init_mlx(&game); // initializes MLX42
 	printf("Drawing pixel...\n");
-	add_static_pixels(&game, argv[1]);
+	add_static_pixels(&game);
 	printf("Displaying image...\n");
 	printf("Setting key hook...\n");
 	mlx_key_hook(game.mlx, keys_hook, &game);
@@ -274,7 +266,7 @@ int	main(int argc, char **argv)
 	free_game(&game); // free game struct memory
 	printf("Done.\n");
 
-	system("leaks cub3D"); // Check for memory leaks
+    //system("leaks cub3D"); // Check for memory leaks
 
 	return (0);
 }
