@@ -40,19 +40,28 @@ typedef struct s_vector
 	float	y;
 }	t_vector;
 
+typedef struct s_assets
+{
+	char			*no;	//filename to NO asset
+	char			*ea;
+	char			*so;
+	char			*we;
+	uint32_t		c;		//color ceiling
+	uint32_t		f;		//color floor
+	bool			c_set;
+	bool			f_set;
+	int				err;
+	int				i;
+}					t_assets;
+
 typedef struct s_game
 {
-	char *no_texture;
-	char *so_texture;
-	char *we_texture;
-	char *ea_texture;
+	t_assets		*assets;
 	mlx_image_t	*wall_image;
 	mlx_texture_t *no_tex; // Loaded North texture
 	mlx_texture_t *so_tex; // Loaded South texture
 	mlx_texture_t *we_tex; // Loaded West texture
 	mlx_texture_t *ea_tex; // Loaded East texture
-	int floor_color;
-	int ceiling_color;
 	float player_angle;
 	int width;
 	int height;

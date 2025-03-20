@@ -13,15 +13,18 @@
 #include "../includes/cub3d.h"
 
 // Initializes game struct with default (safe) values / -1 means uninitialized
-void	init_game(t_game *game)
+void	init_preparsing_assets(t_game *game)
 {
-	game->no_texture = NULL;
-	game->so_texture = NULL;
-	game->we_texture = NULL;
-	game->ea_texture = NULL;
-	game->floor_color = -1;
-	game->ceiling_color = -1;
+	game->assets = malloc (sizeof(t_assets));
+	if (!game->assets)
+		error_exit("Error alllocating assets");
+	
+}
+
+void	init_preparsing_map(t_game *game)
+{
 	game->map = NULL;
+
 	game->map_height = 0;
 	game->map_width = 0;
 	game->pos_player.x = -1;
@@ -166,8 +169,8 @@ void render(void *param)
     t_game *game = (t_game *)param;
 
     handling_key_input(game);
-    reset_img(game->width, game->height / 2, game->floor_color, game->wall_image);
-	reset_img(game->width, game->height, game->ceiling_color, game->wall_image);
+    reset_img(game->width, game->height / 2, game->assets->f, game->wall_image);
+	reset_img(game->width, game->height, game->assets->c, game->wall_image);
 }
 
 int main(int argc, char **argv)
@@ -176,7 +179,8 @@ int main(int argc, char **argv)
 
     if (argc != 2 || !ft_strrchr(argv[1], '.') || ft_strcmp(ft_strrchr(argv[1], '.'), ".cub"))
         error_exit("Usage: ./cub3D <map.cub>");
-    init_game(&game);
+    init_preparsing_assets(&game);
+	init_preparsing_map(&game);
     parse_cub_file(argv[1], &game);
     init_mlx(&game);
     add_static_pixels(&game);
