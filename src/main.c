@@ -18,7 +18,16 @@ void	init_preparsing_assets(t_game *game)
 	game->assets = malloc (sizeof(t_assets));
 	if (!game->assets)
 		error_exit("Error alllocating assets");
-	
+	game->assets->no = NULL;
+	game->assets->ea = NULL;
+	game->assets->so = NULL;
+	game->assets->we = NULL;
+	game->assets->c = 0;
+	game->assets->f = 0;
+	game->assets->c_set = false;
+	game->assets->f_set = false;
+	game->assets->err = 0;
+	game->assets->i = 0;
 }
 
 void	init_preparsing_map(t_game *game)
