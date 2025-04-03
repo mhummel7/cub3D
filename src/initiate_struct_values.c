@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 22:03:49 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/02 16:31:36 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/03 13:05:29 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	initiate_map(t_map *map, char *filename, t_game *game)
 	parse_cub_file(filename, game);
 	map->grid = game->map;
 	map->map_height = game->map_height;
+	map->map_width = game->map_width;
     printf("After initiate_map: map->map_height = %d\n", map->map_height);
 }
 
