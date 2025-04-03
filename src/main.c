@@ -51,6 +51,28 @@ void	keys_hook(mlx_key_data_t keydata, void *param)
 		player->turn_direction = 0;
 }
 
+void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)
+{
+	int	x;
+	int	y;
+
+	if (height == SCREEN_HEIGHT)
+		y = height / 2;
+	else
+		y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			if (y >= 0 && y < height && x >= 0 && x < width)
+				mlx_put_pixel(img, x, y, colour);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	render(void *param)
 {
 	t_str_access	*str_access;
@@ -64,6 +86,8 @@ void	render(void *param)
 	player = str_access->player;
 	ft_memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width
 		* game->dynamic_layer->height * sizeof(int32_t));
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->floor_color, game->view_layer);
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->ceiling_color, game->view_layer);
 	move_player(player);
 	cast_all_rays(player, &rays);
 	render_rays(player, &rays);

@@ -36,7 +36,7 @@ int	get_rgb(char *line)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		error_exit("RGB values must be in range [0,255]");
 	free_split(split);
-	return (r << 16 | g << 8 | b);
+	return (r << 24 | g << 16 | b << 8 | 255);
 }
 
 static void	set_texture(t_game *game, char *id, char *value)

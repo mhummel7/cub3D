@@ -46,8 +46,8 @@ typedef struct s_game
 	mlx_texture_t *so_tex; // Loaded South texture
 	mlx_texture_t *we_tex; // Loaded West texture
 	mlx_texture_t *ea_tex; // Loaded East texture
-	int floor_color;
-	int ceiling_color;
+	uint32_t floor_color;
+	uint32_t ceiling_color;
 	char **map;
 	int map_height;
 	int map_width;
