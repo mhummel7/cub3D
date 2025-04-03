@@ -19,9 +19,20 @@ void	move_player(t_player *player)
 	float	new_player_y;
 
 	player->rotation_angle += player->turn_direction * player->turn_speed;
-	move_step = player->walk_direction * player->walk_speed;
-	new_player_x = player->x + cos(player->rotation_angle) * move_step;
-	new_player_y = player->y + sin(player->rotation_angle) * move_step;
+	new_player_x = player->x;
+	new_player_y = player->y;
+	if (player->walk_direction != 0)
+	{
+		move_step = player->walk_direction * player->walk_speed;
+		new_player_x = player->x + cos(player->rotation_angle) * move_step;
+		new_player_y = player->y + sin(player->rotation_angle) * move_step;
+	}
+	else if (player->diagonal_direction != 0)
+	{
+		move_step = player->diagonal_direction * player->walk_speed;
+		new_player_x = player->x + cos(player->rotation_angle - (PI / 2)) * move_step;
+		new_player_y = player->y + sin(player->rotation_angle - (PI / 2)) * move_step;
+	}
 	if (!check_obstacle_blocks(new_player_x, new_player_y, player))
 	{
 		player->x = new_player_x;

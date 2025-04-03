@@ -77,6 +77,7 @@ typedef struct s_player
 	float		y;
 	int			turn_direction;
 	int			walk_direction;
+	int			diagonal_direction;
 	float		rotation_angle;
 	float		walk_speed;
 	float		turn_speed;

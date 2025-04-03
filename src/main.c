@@ -37,6 +37,10 @@ void	keys_hook(mlx_key_data_t keydata, void *param)
 		player->walk_direction = +1;
 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
 		player->walk_direction = -1;
+	if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
+		player->diagonal_direction = +1;
+	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS))
+		player->diagonal_direction = -1;
 	else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS))
 		player->turn_direction = -1;
 	else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS))
@@ -51,6 +55,10 @@ void	keys_hook(mlx_key_data_t keydata, void *param)
 		player->turn_direction = 0;
 	else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_RELEASE))
 		player->turn_direction = 0;
+	if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
+		player->diagonal_direction = 0;
+	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
+		player->diagonal_direction = 0;
 }
 
 void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)

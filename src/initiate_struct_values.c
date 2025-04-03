@@ -27,6 +27,7 @@ void	initiate_player(t_player *player, t_game *game)
 	player->y = 0;
 	player->turn_direction = 0;
 	player->walk_direction = 0;
+	player->diagonal_direction = 0;
 	player->rotation_angle = PI / 2;
 	player->walk_speed = 2;
 	player->turn_speed = 2 * (PI / 180);
