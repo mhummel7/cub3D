@@ -17,11 +17,11 @@ void	init_mlx(t_game *game)
 	game->window_width = game->map_width * CUBE_SIZE;
     game->window_height = game->map_height * CUBE_SIZE;
 	game->mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d", true);
-	game->view_layer = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	game->background_layer = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->dynamic_layer = mlx_new_image(game->mlx, game->window_width, game->window_height);
     game->static_layer = mlx_new_image(game->mlx, game->window_width, game->window_height);
 	if (!game->mlx) printf("Error: mlx_init failed\n");
-	if (!game->view_layer) printf("Error: view_layer creation failed\n");
+	if (!game->background_layer) printf("Error: background_layer creation failed\n");
 	if (!game->dynamic_layer) printf("Error: dynamic_layer creation failed\n");
 	if (!game->static_layer) printf("Error: static_layer creation failed\n");
 }
@@ -120,7 +120,7 @@ void init_game(t_game *game)
     game->mlx = NULL;
     game->dynamic_layer = NULL;
     game->static_layer = NULL;
-    game->view_layer = NULL;
+    game->background_layer = NULL;
     game->window_width = 0;
     game->window_height = 0;
 }
@@ -140,12 +140,12 @@ int main(int argc, char **argv)
     initiate_player(stru_access.player, game);
     stru_access.player->map = stru_access.map;
     init_mlx(game);
-    mlx_image_to_window(game->mlx, game->view_layer, 0, 0);
+    mlx_image_to_window(game->mlx, game->background_layer, 0, 0);
     mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
     mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
     add_static_pixels(&stru_access);
-	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->floor_color, game->view_layer);
-	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->ceiling_color, game->view_layer);
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->floor_color, game->background_layer);
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->ceiling_color, game->background_layer);
     mlx_loop_hook(game->mlx, render, &stru_access);
     mlx_key_hook(game->mlx, keys_hook, stru_access.player);
     mlx_loop(game->mlx);
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
 // 	initiate_player(stru_access.player, game);
 // 	stru_access.player->map = stru_access.map;
 // 	init_mlx(game);
-// 	mlx_image_to_window(game->mlx, game->view_layer, 0, 0);
+// 	mlx_image_to_window(game->mlx, game->background_layer, 0, 0);
 // 	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
 // 	mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
 // 	add_static_pixels(&stru_access);
