@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 22:04:02 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/03 13:05:20 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/03 13:03:18 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_obstacle_blocks(float new_player_x, float new_player_y,
 	row_block = (new_player_y / CUBE_SIZE);
 	map = player->map;
 	// Prüfe Grenzen
-    if (row_block < 0 || row_block >= map->map_height || column_block < 0 || column_block >= map->map_width) // map_width ist 6
+    if (row_block < 0 || row_block >= map->map_height || column_block < 0 || column_block >= map->map_width)
     {
         printf("Out of bounds: row_block = %d, column_block = %d\n", row_block, column_block);
         return (1); // Behandle es als Wand, um Bewegung zu stoppen

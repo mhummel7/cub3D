@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:54:17 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/13 14:02:37 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/02 16:04:21 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	free_game(t_game *game)
 		free(game->we_texture);
 	if (game->ea_texture)
 		free(game->ea_texture);
-	if (game->no_tex)
-		mlx_delete_texture(game->no_tex);
-	if (game->so_tex)
-		mlx_delete_texture(game->so_tex);
-	if (game->we_tex)
-		mlx_delete_texture(game->we_tex);
-	if (game->ea_tex)
-		mlx_delete_texture(game->ea_tex);
+	// if (game->no_tex)
+	// 	mlx_delete_texture(game->no_tex);
+	// if (game->so_tex)
+	// 	mlx_delete_texture(game->so_tex);
+	// if (game->we_tex)
+	// 	mlx_delete_texture(game->we_tex);
+	// if (game->ea_tex)
+	// 	mlx_delete_texture(game->ea_tex);
 	if (game->map)
 	{
 		i = 0;
