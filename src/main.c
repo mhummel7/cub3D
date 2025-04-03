@@ -37,9 +37,9 @@ void	keys_hook(mlx_key_data_t keydata, void *param)
 		player->walk_direction = +1;
 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
 		player->walk_direction = -1;
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
+	else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS))
 		player->turn_direction = -1;
-	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS))
+	else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS))
 		player->turn_direction = +1;
 	else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(player->game->mlx);
@@ -47,9 +47,9 @@ void	keys_hook(mlx_key_data_t keydata, void *param)
 		player->walk_direction = 0;
 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE))
 		player->walk_direction = 0;
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
+	else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_RELEASE))
 		player->turn_direction = 0;
-	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
+	else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_RELEASE))
 		player->turn_direction = 0;
 }
 
