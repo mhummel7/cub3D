@@ -59,7 +59,6 @@ typedef struct s_game
 	mlx_image_t	*static_layer;
 	mlx_image_t	*dynamic_layer;
 	mlx_image_t	*view_layer;
-	uint32_t	*color_buffer;
 	int window_width;
 	int window_height;
 }				t_game;

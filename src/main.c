@@ -20,13 +20,10 @@ void	init_mlx(t_game *game)
 	game->view_layer = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->dynamic_layer = mlx_new_image(game->mlx, game->window_width, game->window_height);
     game->static_layer = mlx_new_image(game->mlx, game->window_width, game->window_height);
-	game->color_buffer = (uint32_t *)malloc(sizeof(uint32_t) * SCREEN_WIDTH
-			* SCREEN_HEIGHT);
 	if (!game->mlx) printf("Error: mlx_init failed\n");
 	if (!game->view_layer) printf("Error: view_layer creation failed\n");
 	if (!game->dynamic_layer) printf("Error: dynamic_layer creation failed\n");
 	if (!game->static_layer) printf("Error: static_layer creation failed\n");
-	if (!game->color_buffer) printf("Error: color_buffer allocation failed\n");
 }
 
 void	keys_hook(mlx_key_data_t keydata, void *param)
@@ -54,24 +51,6 @@ void	keys_hook(mlx_key_data_t keydata, void *param)
 		player->turn_direction = 0;
 }
 
-void	clear_color_buffer(t_game *game, uint32_t color)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		while (y < SCREEN_HEIGHT)
-		{
-			game->color_buffer[(SCREEN_WIDTH * y) + x] = color;
-			y++;
-		}
-		x++;
-	}
-}
-
 void	render(void *param)
 {
 	t_str_access	*str_access;
@@ -85,11 +64,6 @@ void	render(void *param)
 	player = str_access->player;
 	ft_memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width
 		* game->dynamic_layer->height * sizeof(int32_t));
-	clear_color_buffer(game, 0xFF00FF00);
-	// ft_memcpy(game->view_layer->pixels, game->color_buffer, SCREEN_HEIGHT
-	//	* SCREEN_WIDTH * sizeof(uint32_t));
-	ft_memset(game->view_layer->pixels, 220, SCREEN_HEIGHT * SCREEN_WIDTH
-		* sizeof(int32_t));
 	move_player(player);
 	cast_all_rays(player, &rays);
 	render_rays(player, &rays);
@@ -125,9 +99,8 @@ void init_game(t_game *game)
     game->dynamic_layer = NULL;
     game->static_layer = NULL;
     game->view_layer = NULL;
-    game->color_buffer = NULL;
-    game->window_width = 0;  // Neu
-    game->window_height = 0; // Neu
+    game->window_width = 0;
+    game->window_height = 0;
 }
 
 int main(int argc, char **argv)
@@ -141,7 +114,6 @@ int main(int argc, char **argv)
     initiate_str_access_values(&stru_access);
     game = stru_access.game;
     init_game(game);
-    printf("Set window size: width = %d, height = %d\n", game->window_width, game->window_height);
     initiate_map(stru_access.map, argv[1], game);
     initiate_player(stru_access.player, game);
     stru_access.player->map = stru_access.map;

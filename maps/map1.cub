@@ -3,6 +3,11 @@ SO textures/south.png
 WE textures/west.png
 EA textures/east.png
 
+
+
+F 220,100,0
+C 225,30,0
+
 111111
 100001
 10N001
