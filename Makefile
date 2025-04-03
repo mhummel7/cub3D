@@ -35,14 +35,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -Iincludes -I$(LIBFT_DIR) -c $< -o $@
 
 # Link object files with libraries for macbook manuel
-$(NAME): $(OBJ) MLX42/build/libmlx42.a
-	@make all -C ./libft
-	$(CC) $(CFLAGS) $^ $(INCLUDE) -Llibft -lft -LMLX42/build -lmlx42 -L/opt/homebrew/lib -lglfw -lm -o $(NAME)
-
-# # Link object files with libraries
 # $(NAME): $(OBJ) MLX42/build/libmlx42.a
 # 	@make all -C ./libft
-# 	$(CC) $(CFLAGS) $^ $(INCLUDE) -Llibft -lft -LMLX42/build -lmlx42 -lglfw -lm -o $(NAME)
+# 	$(CC) $(CFLAGS) $^ $(INCLUDE) -Llibft -lft -LMLX42/build -lmlx42 -L/opt/homebrew/lib -lglfw -lm -o $(NAME)
+
+# # Link object files with libraries
+$(NAME): $(OBJ) MLX42/build/libmlx42.a
+	@make all -C ./libft
+	$(CC) $(CFLAGS) $^ $(INCLUDE) -Llibft -lft -LMLX42/build -lmlx42 -lglfw -lm -o $(NAME)
 
 MLX42/build/libmlx42.a:
 	cd MLX42 && cmake -B build && make -C build -j4
