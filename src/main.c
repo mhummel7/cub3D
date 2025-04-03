@@ -140,9 +140,7 @@ int main(int argc, char **argv)
 
     initiate_str_access_values(&stru_access);
     game = stru_access.game;
-    init_game(game); // Initialisiert t_game
-	game->window_width = game->map_width * CUBE_SIZE;
-    game->window_height = game->map_height * CUBE_SIZE;
+    init_game(game);
     printf("Set window size: width = %d, height = %d\n", game->window_width, game->window_height);
     initiate_map(stru_access.map, argv[1], game);
     initiate_player(stru_access.player, game);
