@@ -30,7 +30,7 @@
 # define FOV_ANGLE (60 * (PI / 180))
 # define PI 3.14159265
 # define TWO_PI 6.28318530
-# define NUM_RAYS 30
+# define NUM_RAYS 550
 // # define MAP_NUM_ROWS 6
 // # define MAP_NUM_COLS 15
 // # define WINDOW_WIDTH (MAP_NUM_COLS * CUBE_SIZE)
