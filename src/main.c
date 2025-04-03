@@ -86,8 +86,6 @@ void	render(void *param)
 	player = str_access->player;
 	ft_memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width
 		* game->dynamic_layer->height * sizeof(int32_t));
-	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->floor_color, game->view_layer);
-	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->ceiling_color, game->view_layer);
 	move_player(player);
 	cast_all_rays(player, &rays);
 	render_rays(player, &rays);
@@ -146,6 +144,8 @@ int main(int argc, char **argv)
     mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
     mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
     add_static_pixels(&stru_access);
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->floor_color, game->view_layer);
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->ceiling_color, game->view_layer);
     mlx_loop_hook(game->mlx, render, &stru_access);
     mlx_key_hook(game->mlx, keys_hook, stru_access.player);
     mlx_loop(game->mlx);
