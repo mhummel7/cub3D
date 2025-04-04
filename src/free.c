@@ -12,10 +12,8 @@
 
 #include "../includes/cub3d.h"
 
-void	free_game(t_game *game)
+void	free_game_char(t_game *game)
 {
-	int	i;
-
 	if (game->no_texture)
 		free(game->no_texture);
 	if (game->so_texture)
@@ -24,24 +22,36 @@ void	free_game(t_game *game)
 		free(game->we_texture);
 	if (game->ea_texture)
 		free(game->ea_texture);
-	// if (game->no_tex)
-	// 	mlx_delete_texture(game->no_tex);
-	// if (game->so_tex)
-	// 	mlx_delete_texture(game->so_tex);
-	// if (game->we_tex)
-	// 	mlx_delete_texture(game->we_tex);
-	// if (game->ea_tex)
-	// 	mlx_delete_texture(game->ea_tex);
+}
+
+void	free_game_textures(t_game *game)
+{
+	if (game->no_tex)
+		mlx_delete_texture(game->no_tex);
+	if (game->so_tex)
+		mlx_delete_texture(game->so_tex);
+	if (game->we_tex)
+		mlx_delete_texture(game->we_tex);
+	if (game->ea_tex)
+		mlx_delete_texture(game->ea_tex);
+}
+
+void	free_game(t_game *game)
+{
+	int	i;
+
+	free_game_char(game);
+	free_game_textures(game);
 	if (game->map)
 	{
 		i = 0;
 		while (game->map[i])
 		{
-			printf("Freeing map[%d]: %p\n", i, game->map[i]); // Debug message
+			printf("Freeing map[%d]: %p\n", i, game->map[i]);
 			free(game->map[i]);
 			i++;
 		}
-		printf("Freeing map array: %p\n", game->map); // Debug message
+		printf("Freeing map array: %p\n", game->map);
 		free(game->map);
 	}
 }
