@@ -24,7 +24,7 @@ uint32_t get_mlx_texture_color(mlx_texture_t* texture, int x, int y)
     return (r << 24) | (g << 16) | (b << 8) | a;
 }
 
-void generate3Dprojection(t_rays *rays, t_player *player)
+void generate_3d_projection(t_rays *rays, t_player *player)
 {
     int i = 0;
     while(i < NUM_RAYS)

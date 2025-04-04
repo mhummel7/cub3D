@@ -273,10 +273,11 @@ int set_texture_direction(char **texture_char, mlx_texture_t **texture, char *va
 /* init_structs.h */
 void	init_mlx(t_game *game);
 void init_game(t_game *game);
+void init_img_to_window(t_game *game);
 
 /* generate_3d.c */
 uint32_t get_mlx_texture_color(mlx_texture_t* texture, int x, int y);
-void generate3Dprojection(t_rays *rays, t_player *player);
+void generate_3d_projection(t_rays *rays, t_player *player);
 
 /*keys_hook.c*/
 void	keys_hook(mlx_key_data_t keydata, void *param);

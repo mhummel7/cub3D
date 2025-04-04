@@ -12,6 +12,14 @@
 
 #include "../includes/cub3d.h"
 
+void	init_img_to_window(t_game *game)
+{
+	mlx_image_to_window(game->mlx, game->background_layer, 0, 0);
+	mlx_image_to_window(game->mlx, game->wall_layer, 0, 0);
+	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
+	mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
+}
+
 void	init_mlx(t_game *game)
 {
 	game->window_width = game->map_width * CUBE_SIZE;
