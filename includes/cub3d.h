@@ -270,4 +270,15 @@ bool			check_limits_vert_ray(t_ray_wall_hit_vert *vert_ray_data, t_game *game);
 void set_dir_player_pos(t_game *game, int x, int y);
 int set_texture_direction(char **texture_char, mlx_texture_t **texture, char *value);
 
+/* init_structs.h */
+void	init_mlx(t_game *game);
+void init_game(t_game *game);
+
+/* generate_3d.c */
+uint32_t get_mlx_texture_color(mlx_texture_t* texture, int x, int y);
+void generate3Dprojection(t_rays *rays, t_player *player);
+
+/*keys_hook.c*/
+void	keys_hook(mlx_key_data_t keydata, void *param);
+
 #endif
