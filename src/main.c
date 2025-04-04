@@ -186,6 +186,7 @@ int main(int argc, char **argv)
     if (check_argc(argc, argv))
         return (1);
 
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
     initiate_str_access_values(&stru_access);
     game = stru_access.game;
     init_game(game);
