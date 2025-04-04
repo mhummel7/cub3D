@@ -17,3 +17,13 @@ void	set_dir_player_pos(t_game *game, int x, int y)
 	game->dir_x = x;
 	game->dir_y = y;
 }
+
+int	set_texture_direction(char **texture_char, mlx_texture_t **texture,
+		char *value)
+{
+	*(texture_char) = ft_strdup(value);
+	*(texture) = mlx_load_png(value);
+	if (!*(texture))
+		return (0);
+	return (1);
+}

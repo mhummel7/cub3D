@@ -268,5 +268,6 @@ bool			check_limits_vert_ray(t_ray_wall_hit_vert *vert_ray_data, t_game *game);
 
 /* set_dir_player_pos.c */
 void set_dir_player_pos(t_game *game, int x, int y);
+int set_texture_direction(char **texture_char, mlx_texture_t **texture, char *value);
 
 #endif

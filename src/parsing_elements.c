@@ -25,8 +25,10 @@ static void	free_split(char **split)
 int	get_rgb(char *line)
 {
 	char	**split;
+	int		r;
+	int		g;
+	int		b;
 
-	int r, g, b;
 	split = ft_split(line, ',');
 	if (!split[0] || !split[1] || !split[2] || split[3])
 		error_exit("Invalid RGB format");
@@ -39,49 +41,40 @@ int	get_rgb(char *line)
 	return (r << 24 | g << 16 | b << 8 | 255);
 }
 
-static void	set_texture(t_game *game, char *id, char *value)
+void	validate_texture_path(char *path)
 {
 	int	fd;
 
-	fd = open(value, O_RDONLY);
+	if (!path || !*path)
+		error_exit("Empty texture path");
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_exit("Texture file not found");
 	close(fd);
+}
+
+void	set_texture(t_game *game, char *id, char *value)
+{
+	validate_texture_path(value);
 	if (ft_strcmp(id, "NO") == 0)
 	{
-		game->no_texture = ft_strdup(value);
-		game->no_tex = mlx_load_png(value);
-		if (!game->no_tex)
+		if (!set_texture_direction(&(game->no_texture), &(game->no_tex), value))
 			error_exit("Failed to load NO texture");
-		printf("Allocated no_texture: %p, Loaded no_tex: %p\n",
-			game->no_texture, game->no_tex);
 	}
 	else if (ft_strcmp(id, "SO") == 0)
 	{
-		game->so_texture = ft_strdup(value);
-		game->so_tex = mlx_load_png(value);
-		if (!game->so_tex)
+		if (!set_texture_direction(&(game->so_texture), &(game->so_tex), value))
 			error_exit("Failed to load SO texture");
-		printf("Allocated so_texture: %p, Loaded so_tex: %p\n",
-			game->so_texture, game->so_tex);
 	}
 	else if (ft_strcmp(id, "WE") == 0)
 	{
-		game->we_texture = ft_strdup(value);
-		game->we_tex = mlx_load_png(value);
-		if (!game->we_tex)
+		if (!set_texture_direction(&(game->we_texture), &(game->we_tex), value))
 			error_exit("Failed to load WE texture");
-		printf("Allocated we_texture: %p, Loaded we_tex: %p\n",
-			game->we_texture, game->we_tex);
 	}
 	else if (ft_strcmp(id, "EA") == 0)
 	{
-		game->ea_texture = ft_strdup(value);
-		game->ea_tex = mlx_load_png(value);
-		if (!game->ea_tex)
+		if (!set_texture_direction(&(game->ea_texture), &(game->ea_tex), value))
 			error_exit("Failed to load EA texture");
-		printf("Allocated ea_texture: %p, Loaded ea_tex: %p\n",
-			game->ea_texture, game->ea_tex);
 	}
 	else
 		error_exit("Unknown element identifier");
