@@ -18,7 +18,6 @@ void	initiate_map(t_map *map, char *filename, t_game *game)
 	map->grid = game->map;
 	map->map_height = game->map_height;
 	map->map_width = game->map_width;
-    printf("After initiate_map: map->map_height = %d\n", map->map_height);
 }
 
 void	initiate_player(t_player *player, t_game *game)
