@@ -83,6 +83,20 @@ void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)
 	}
 }
 
+uint32_t get_mlx_texture_color(mlx_texture_t* texture, int x, int y)
+{
+    if (!texture || x < 0 || x >= (int)texture->width || y < 0 || y >= (int)texture->height)
+        return 0xFF000000; // Return black if invalid
+    
+    int index = (y * texture->width + x) * 4;
+    uint8_t r = texture->pixels[index];
+    uint8_t g = texture->pixels[index + 1];
+    uint8_t b = texture->pixels[index + 2];
+    uint8_t a = texture->pixels[index + 3];
+    
+    return (r << 24) | (g << 16) | (b << 8) | a;
+}
+
 void generate3Dprojection(t_rays *rays, t_player *player)
 {
     int i = 0;
@@ -93,6 +107,23 @@ void generate3Dprojection(t_rays *rays, t_player *player)
         float projectedWallHeight = (CUBE_SIZE / perpDistance) * distanceProjPlane;
 
         int wallStripHeight = (int)projectedWallHeight;
+        
+        // Calculate texture X coordinate (where the wall was hit)
+        float wallX;
+        if ((*rays)[i].was_hit_vertical)
+            wallX = (*rays)[i].wall_hit_y - floor((*rays)[i].wall_hit_y);
+        else
+            wallX = (*rays)[i].wall_hit_x - floor((*rays)[i].wall_hit_x);
+        
+        // Select the appropriate texture
+        mlx_texture_t* texture;
+        if ((*rays)[i].was_hit_vertical) {
+            texture = ((*rays)[i].ray_angle > M_PI/2 && (*rays)[i].ray_angle < 3*M_PI/2) 
+                ? player->game->we_tex : player->game->ea_tex;
+        } else {
+            texture = ((*rays)[i].ray_angle > M_PI) 
+                ? player->game->so_tex : player->game->no_tex;
+        }
 
         int wallTopPixel = (SCREEN_HEIGHT / 2) - (wallStripHeight / 2);
         wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
@@ -100,11 +131,22 @@ void generate3Dprojection(t_rays *rays, t_player *player)
         int wallBottomPixel = (SCREEN_HEIGHT / 2) + (wallStripHeight / 2);
         wallBottomPixel = wallBottomPixel > SCREEN_HEIGHT ? SCREEN_HEIGHT : wallBottomPixel;
 
+        // Draw the textured wall strip
         int y = wallTopPixel;
         while(y < wallBottomPixel)
         {
-            mlx_put_pixel(player->game->wall_layer, i, y, 
-                (*rays)[i].was_hit_vertical ? 0xFFFFFFFF : 0xFFCCCCCC);
+            // Calculate texture Y coordinate
+            float texPosY = (y - wallTopPixel) / (float)wallStripHeight;
+            int texY = (int)(texPosY * texture->height);
+            texY = texY < 0 ? 0 : (texY >= (int)texture->height ? texture->height - 1 : texY);
+            
+            // Calculate texture X coordinate
+            int texX = (int)(wallX * texture->width);
+            texX = texX < 0 ? 0 : (texX >= (int)texture->width ? texture->width - 1 : texX);
+            
+            // Get color from texture
+            uint32_t color = get_mlx_texture_color(texture, texX, texY);
+            mlx_put_pixel(player->game->wall_layer, i, y, color);
             y++;
         }
         i++;
