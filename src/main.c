@@ -207,33 +207,3 @@ int main(int argc, char **argv)
     free_game(game);
     return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	t_str_access	stru_access;
-// 	t_game			*game;
-
-// 	if (check_argc(argc, argv))
-// 		return (1);
-
-// 	stru_access.map = NULL;
-// 	stru_access.game = NULL;
-// 	stru_access.player = NULL;
-// 	initiate_str_access_values(&stru_access);
-// 	game = stru_access.game;
-// 	init_game(game); // Initialisiert t_game
-// 	initiate_map(stru_access.map, argv[1], game);
-// 	initiate_player(stru_access.player, game);
-// 	stru_access.player->map = stru_access.map;
-// 	init_mlx(game);
-// 	mlx_image_to_window(game->mlx, game->background_layer, 0, 0);
-// 	mlx_image_to_window(game->mlx, game->static_layer, 0, 0);
-// 	mlx_image_to_window(game->mlx, game->dynamic_layer, 0, 0);
-// 	add_static_pixels(&stru_access);
-// 	mlx_loop_hook(game->mlx, render, &stru_access);
-// 	mlx_key_hook(game->mlx, keys_hook, stru_access.player);
-// 	mlx_loop(game->mlx);
-// 	mlx_terminate(game->mlx);
-// 	free_game(game);
-// 	return (0);
-// }
