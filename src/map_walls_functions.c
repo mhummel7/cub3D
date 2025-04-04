@@ -43,7 +43,6 @@ void	process_map_row(t_str_access *str_access, int i, int *base_x_mult,
 	map = str_access->map;
 	game = str_access->game;
 	x = 0;
-	printf("Processing row %d: %s\n", i, map->grid[i]);
 	while (map->grid[i][x])
 	{
 		if (map->grid[i][x] == '1')
@@ -56,7 +55,6 @@ void	process_map_row(t_str_access *str_access, int i, int *base_x_mult,
 			player->x = game->pos_x * CUBE_SIZE;
 			player->y = game->pos_y * CUBE_SIZE;
 			set_player_rotation_angle(player, map->grid[i][x]);
-			printf("Player position set to x: %f, y: %f\n", player->x, player->y);
 		}
 		*base_x_mult += CUBE_SIZE;
 		x++;
@@ -74,17 +72,14 @@ void	add_static_pixels(t_str_access *str_access)
 	base_x_mult = 0;
 	base_y_mult = 0;
 	i = 0;
-	printf("Starting add_static_pixels, map_height: %d\n", str_access->map->map_height);
 	while (i < str_access->map->map_height)
 	{
-		printf("Calling process_map_row for i = %d\n", i);
 		process_map_row(str_access, i, &base_x_mult, &base_y_mult);
 		add_y++;
 		base_x_mult = 0;
 		base_y_mult = CUBE_SIZE * add_y;
 		i++;
 	}
-	printf("add_static_pixels completed\n");
 }
 
 int	check_obstacle_blocks(float new_player_x, float new_player_y,
@@ -97,12 +92,11 @@ int	check_obstacle_blocks(float new_player_x, float new_player_y,
 	column_block = (new_player_x / CUBE_SIZE);
 	row_block = (new_player_y / CUBE_SIZE);
 	map = player->map;
-	// Prüfe Grenzen
-    if (row_block < 0 || row_block >= map->map_height || column_block < 0 || column_block >= map->map_width)
-    {
-        printf("Out of bounds: row_block = %d, column_block = %d\n", row_block, column_block);
-        return (1); // Behandle es als Wand, um Bewegung zu stoppen
-    }
+	if (row_block < 0 || row_block >= map->map_height || column_block < 0
+		|| column_block >= map->map_width)
+	{
+		return (1);
+	}
 	if (map->grid[row_block][column_block] == '1')
 	{
 		return (1);
@@ -115,10 +109,9 @@ int	is_wall(float x, float y, t_player *player)
 	int	map_grid_index_x;
 	int	map_grid_index_y;
 
-	if (x < 0 || x > player->game->window_width || y < 0 || y > player->game->window_height)
-	{
+	if (x < 0 || x > player->game->window_width || y < 0
+		|| y > player->game->window_height)
 		return (1);
-	}
 	map_grid_index_x = floor(x / CUBE_SIZE);
 	map_grid_index_y = floor(y / CUBE_SIZE);
 	if (player->map->grid[map_grid_index_y][map_grid_index_x] == '1')
