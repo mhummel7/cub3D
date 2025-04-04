@@ -83,46 +83,6 @@ void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)
 	}
 }
 
-void render_3d_walls(t_player *player, t_rays *rays, mlx_image_t *wall_layer)
-{
-    ft_memset(wall_layer->pixels, 0, wall_layer->width * wall_layer->height * sizeof(int32_t));
-    
-    int ray_step = NUM_RAYS / SCREEN_WIDTH;
-    ray_step = ray_step < 1 ? 1 : ray_step;
-    
-    for (int screen_x = 0; screen_x < SCREEN_WIDTH; screen_x++)
-    {
-        int ray_idx = (screen_x * NUM_RAYS) / SCREEN_WIDTH;
-        ray_idx = ray_idx < 0 ? 0 : (ray_idx >= NUM_RAYS ? NUM_RAYS - 1 : ray_idx);
-
-        if ((*rays)[ray_idx].distance <= 0)
-            continue;
-
-        float angle_diff = (*rays)[ray_idx].ray_angle - player->rotation_angle;
-        float corrected_distance = (*rays)[ray_idx].distance * cos(angle_diff);
-        
-        corrected_distance = fmaxf(corrected_distance, 0.1f);
-        
-        float dist_to_proj_plane = (SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2);
-        float wall_height = (CUBE_SIZE / corrected_distance) * dist_to_proj_plane;
-        
-        int wall_top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-        wall_top = wall_top < 0 ? 0 : wall_top;
-        
-        int wall_bottom = (SCREEN_HEIGHT / 2) + (wall_height / 2);
-        wall_bottom = wall_bottom >= SCREEN_HEIGHT ? SCREEN_HEIGHT - 1 : wall_bottom;
-        
-        uint32_t color = 0xFFFFFFFF;
-        
-        for (int y = wall_top; y <= wall_bottom; y++)
-        {
-            if (y >= 0 && y < SCREEN_HEIGHT) {
-                mlx_put_pixel(wall_layer, screen_x, y, color);
-            }
-        }
-    }
-}
-
 void	render(void *param)
 {
 	t_str_access	*str_access;
@@ -134,13 +94,10 @@ void	render(void *param)
 	str_access = (t_str_access *)param;
 	game = str_access->game;
 	player = str_access->player;
-	ft_memset(game->wall_layer->pixels, 0, 
-		game->wall_layer->width * game->wall_layer->height * sizeof(int32_t));
 	ft_memset(game->dynamic_layer->pixels, 0, game->dynamic_layer->width
 		* game->dynamic_layer->height * sizeof(int32_t));
 	move_player(player);
 	cast_all_rays(player, &rays);
-	render_3d_walls(player, &rays, game->wall_layer);
 	render_rays(player, &rays);
 }
 
