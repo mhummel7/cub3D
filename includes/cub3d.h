@@ -30,7 +30,7 @@
 # define FOV_ANGLE (60 * (PI / 180))
 # define PI 3.14159265
 # define TWO_PI 6.28318530
-# define NUM_RAYS 550
+# define NUM_RAYS 1300
 // # define MAP_NUM_ROWS 6
 // # define MAP_NUM_COLS 15
 // # define WINDOW_WIDTH (MAP_NUM_COLS * CUBE_SIZE)
@@ -60,6 +60,7 @@ typedef struct s_game
 	mlx_image_t	*dynamic_layer;
 	mlx_image_t	*background_layer;
 	mlx_image_t	*wall_layer;
+	uint32_t *color_buffer;
 	int window_width;
 	int window_height;
 }				t_game;

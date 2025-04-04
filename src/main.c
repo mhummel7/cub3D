@@ -83,6 +83,43 @@ void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)
 	}
 }
 
+void generate3Dprojection(t_rays *rays, t_player *player)
+{
+    int i = 0;
+    while(i < NUM_RAYS)
+    {
+        float perpDistance = (*rays)[i].distance * cos((*rays)[i].ray_angle - player->rotation_angle);
+        float distanceProjPlane = (SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2);
+        float projectedWallHeight = (CUBE_SIZE / perpDistance) * distanceProjPlane;
+
+        int wallStripHeight = (int)projectedWallHeight;
+
+        int wallTopPixel = (SCREEN_HEIGHT / 2) - (wallStripHeight / 2);
+        wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
+
+        int wallBottomPixel = (SCREEN_HEIGHT / 2) + (wallStripHeight / 2);
+        wallBottomPixel = wallBottomPixel > SCREEN_HEIGHT ? SCREEN_HEIGHT : wallBottomPixel;
+
+        int y = wallTopPixel;
+        while(y < wallBottomPixel)
+        {
+            mlx_put_pixel(player->game->wall_layer, i, y, 
+                (*rays)[i].was_hit_vertical ? 0xFFFFFFFF : 0xFFCCCCCC);
+            y++;
+        }
+        i++;
+    }
+}
+
+void clearColorBuffer(uint32_t color, t_game *game) {
+    // Create a solid color image
+    for (int x = 0; x < SCREEN_WIDTH; x++) {
+        for (int y = 0; y < SCREEN_HEIGHT; y++) {
+            mlx_put_pixel(game->wall_layer, x, y, color);
+        }
+    }
+}
+
 void	render(void *param)
 {
 	t_str_access	*str_access;
@@ -98,6 +135,8 @@ void	render(void *param)
 		* game->dynamic_layer->height * sizeof(int32_t));
 	move_player(player);
 	cast_all_rays(player, &rays);
+	clearColorBuffer(0xFF000000, game);
+	generate3Dprojection(&rays, player);
 	render_rays(player, &rays);
 }
 
