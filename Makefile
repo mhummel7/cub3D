@@ -22,7 +22,8 @@ SRC = $(SRC_DIR)/main.c \
 	  $(SRC_DIR)/set_dir_player_pos.c \
 	  $(SRC_DIR)/init_structs.c \
 	  $(SRC_DIR)/generate_3d.c \
-	  $(SRC_DIR)/keys_hook.c
+	  $(SRC_DIR)/keys_hook.c \
+	  $(SRC_DIR)/get_rgb_floor_ceiling.c
 
 OBJ_DIR = obj
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

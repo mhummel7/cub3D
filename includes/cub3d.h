@@ -92,7 +92,7 @@ typedef struct s_ray
 	int				is_ray_facing_down;
 	int				is_ray_facing_left;
 	int				is_ray_facing_right;
-}					t_rays[NUM_RAYS];
+} t_rays[NUM_RAYS];
 
 typedef struct s_str_access
 {
@@ -200,7 +200,7 @@ void				strip_newline(char *line);
 
 // parsing_elements.c
 void				parse_element(t_game *game, char *line);
-int					get_rgb(char *line);
+void				free_split(char **split);
 
 // validate_map.c
 void				validate_map(t_game *game);
@@ -297,5 +297,8 @@ void				generate_3d_projection(t_rays *rays, t_player *player);
 
 /*keys_hook.c*/
 void				keys_hook(mlx_key_data_t keydata, void *param);
+
+/*get_rgb_floor_ceiling.c*/
+int					get_rgb(char **line);
 
 #endif
