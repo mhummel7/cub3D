@@ -1,9 +1,9 @@
-NO ./assets/tile_0.png
-WE ./assets/tile_1.png
-SO ./assets/tile_2.png
-EA ./assets/tile_3.png
-F 66, 110, 65
-C 0, 0, 0
+NO textures/north.png
+SO textures/south.png
+WE textures/west.png
+EA textures/east.png
+F 66,110,65
+C 0,0,0
 
 111111111
 100000001

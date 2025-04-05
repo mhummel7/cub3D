@@ -85,6 +85,8 @@ void	parse_element(t_game *game, char *line)
 	char	**split;
 
 	split = ft_split(line, ' ');
+	printf("AA:%s\n", split[0]);
+	printf("AA:%s\n", split[1]);
 	if (!split[0] || !split[1] || split[2])
 		error_exit("Invalid element format");
 	if (ft_strcmp(split[0], "F") == 0)
