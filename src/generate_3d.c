@@ -83,7 +83,7 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 
 	vars.perp_distance = (*rays)[x].distance * cos((*rays)[x].ray_angle
 			- player->rotation_angle);
-	vars.distance_proj_plane = (SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2);
+	vars.distance_proj_plane = (SCREEN_WIDTH / 2) / tan((60 * (PI / 180)) / 2);
 	vars.projected_wall_height = (CUBE_SIZE / vars.perp_distance)
 		* vars.distance_proj_plane;
 	vars.wall_strip_height = (int)vars.projected_wall_height;

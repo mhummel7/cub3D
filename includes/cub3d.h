@@ -27,7 +27,6 @@
 # define SCREEN_HEIGHT 800
 # define CUBE_SIZE 16
 # define MOVING_OBJECT_SIZE 1
-# define FOV_ANGLE (60 * (PI / 180))
 # define PI 3.14159265
 # define TWO_PI 6.28318530
 # define NUM_RAYS 1300
