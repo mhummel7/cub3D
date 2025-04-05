@@ -43,7 +43,7 @@ void	put_pixels(t_process_single_ray_variables *vars, t_player *player,
 		vars->tex_y = 0;
 	else if (vars->tex_y >= (int)texture->height)
 		vars->tex_y = texture->height - 1;
-	vars->tex_x = (int)(vars->wallX * texture->width);
+	vars->tex_x = (int)(vars->wall_x * texture->width);
 	if (vars->tex_x < 0)
 		vars->tex_x = 0;
 	else if (vars->tex_x >= (int)texture->width)
@@ -88,9 +88,9 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 		* vars.distance_proj_plane;
 	vars.wall_strip_height = (int)vars.projected_wall_height;
 	if ((*rays)[x].was_hit_vertical)
-		vars.wallX = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
+		vars.wall_x = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
 	else
-		vars.wallX = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
+		vars.wall_x = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
 	if ((*rays)[x].was_hit_vertical)
 	{
 		if ((*rays)[x].ray_angle > PI / 2 && (*rays)[x].ray_angle < 3 * PI / 2)

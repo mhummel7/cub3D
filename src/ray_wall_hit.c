@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void	find_horz_ray_wall_hit(t_horz_wall_hit_data *horz_wall_hit_data,
+void	find_horz_wall_hit(t_horz_wall_hit_data *horz_wall_hit_data,
 		float ray_angle, t_player *player, t_ray_facing_data *ray_facing_data)
 {
 	t_ray_wall_hit_horz	ray_data;
@@ -41,7 +41,7 @@ void	find_horz_ray_wall_hit(t_horz_wall_hit_data *horz_wall_hit_data,
 	}
 }
 
-void	find_vert_ray_wall_hit(t_vert_wall_hit_data *vert_wall_hit_data,
+void	find_vert_wall_hit(t_vert_wall_hit_data *vert_wall_hit_data,
 		float ray_angle, t_player *player, t_ray_facing_data *ray_facing_data)
 {
 	t_ray_wall_hit_vert	ray_data;
@@ -70,7 +70,7 @@ void	find_vert_ray_wall_hit(t_vert_wall_hit_data *vert_wall_hit_data,
 	}
 }
 
-void	inititate_ray_direction_data(t_ray_facing_data *ray_facing_data,
+void	init_ray_direction_data(t_ray_facing_data *ray_facing_data,
 		float ray_angle)
 {
 	ray_facing_data->is_ray_facing_down = ray_angle > 0 && ray_angle < PI;
@@ -106,7 +106,7 @@ void	find_distance(t_hit_distance_wall *hit_distance_wall,
 	}
 }
 
-void	init_wall_hit_data_values(t_horz_wall_hit_data *horz_hit_data,
+void	init_wall_hit_data_vars(t_horz_wall_hit_data *horz_hit_data,
 		t_vert_wall_hit_data *vert_hit_data)
 {
 	horz_hit_data->horz_hit_x = 0;
