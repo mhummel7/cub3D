@@ -86,7 +86,7 @@ typedef struct s_player
 	t_map		*map;
 }				t_player;
 
-typedef struct Ray
+typedef struct s_ray
 {
 	float		ray_angle;
 	float		wall_hit_x;
@@ -171,6 +171,21 @@ typedef struct s_draw_line_variables
 	int			err;
 	int			e2;
 }				t_draw_line_variables;
+
+typedef struct s_process_single_ray_variables
+{
+	float perp_distance;
+	float distance_proj_plane;
+	float projected_wall_height;
+	int wall_strip_height;
+	float wallX;
+	int wall_top_pixel;
+	int wall_bottom_pixel;
+	int y;
+	float tex_pos_y;
+	int tex_y;
+	int tex_x;
+}				t_process_single_ray_variables;
 
 void			draw_line(t_player *player, t_game *game, float dest_x,
 					float dest_y);
