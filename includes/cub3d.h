@@ -185,6 +185,7 @@ typedef struct s_process_single_ray_variables
 	float tex_pos_y;
 	int tex_y;
 	int tex_x;
+	mlx_texture_t					*texture;
 }				t_process_single_ray_variables;
 
 void			draw_line(t_player *player, t_game *game, float dest_x,

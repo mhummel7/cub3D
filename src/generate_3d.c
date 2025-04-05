@@ -53,7 +53,7 @@ void	put_pixels(t_process_single_ray_variables *vars, t_player *player,
 }
 
 void	set_top_bottom_pixel(t_process_single_ray_variables *vars,
-		t_player *player, int x, mlx_texture_t *texture)
+		t_player *player, int x)
 {
 	vars->wall_top_pixel = (SCREEN_HEIGHT / 2) - (vars->wall_strip_height / 2);
 	if (vars->wall_top_pixel < 0)
@@ -65,7 +65,7 @@ void	set_top_bottom_pixel(t_process_single_ray_variables *vars,
 	vars->y = vars->wall_top_pixel;
 	while (vars->y < vars->wall_bottom_pixel)
 	{
-		put_pixels(vars, player, x, texture);
+		put_pixels(vars, player, x, vars->texture);
 		vars->y++;
 	}
 }
@@ -73,7 +73,6 @@ void	set_top_bottom_pixel(t_process_single_ray_variables *vars,
 void	process_single_ray(t_rays *rays, int x, t_player *player)
 {
 	t_process_single_ray_variables	vars;
-	mlx_texture_t					*texture;
 
 	vars.perp_distance = (*rays)[x].distance * cos((*rays)[x].ray_angle
 			- player->rotation_angle);
@@ -88,23 +87,23 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 	if ((*rays)[x].was_hit_vertical)
 	{
 		if ((*rays)[x].ray_angle > PI / 2 && (*rays)[x].ray_angle < 3 * PI / 2)
-			texture = player->game->we_tex;
+			vars.texture = player->game->we_tex;
 		else
-			texture = player->game->ea_tex;
+			vars.texture = player->game->ea_tex;
 	}
 	else
 	{
 		if ((*rays)[x].ray_angle > PI)
-			texture = player->game->so_tex;
+			vars.texture = player->game->so_tex;
 		else
-			texture = player->game->no_tex;
+			vars.texture = player->game->no_tex;
 	}
-	set_top_bottom_pixel(&vars, player, x, texture);
+	set_top_bottom_pixel(&vars, player, x);
 }
 
 void	generate_3d_projection(t_rays *rays, t_player *player)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < NUM_RAYS)
