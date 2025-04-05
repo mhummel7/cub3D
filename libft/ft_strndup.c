@@ -22,5 +22,5 @@ char	*ft_strndup(const char *s, size_t n)
 	if (!result)
 		return (NULL);
 	result[len] = '\0';
-	return (char *)memcpy(result, s, len);
+	return ((char *)ft_memcpy(result, s, len));
 }
