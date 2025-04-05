@@ -24,6 +24,17 @@ uint32_t get_mlx_texture_color(mlx_texture_t* texture, int x, int y)
     return (r << 24) | (g << 16) | (b << 8) | a;
 }
 
+void put_pixels(t_process_single_ray_variables *vars, t_player *player, int x, mlx_texture_t* texture)
+{
+    vars->tex_pos_y = (vars->y - vars->wall_top_pixel) / (float)vars->wall_strip_height;
+    vars->tex_y = (int)(vars->tex_pos_y * texture->height);
+    vars->tex_y = vars->tex_y < 0 ? 0 : (vars->tex_y >= (int)texture->height ? texture->height - 1 : vars->tex_y);
+    vars->tex_x = (int)(vars->wallX * texture->width);
+    vars->tex_x = vars->tex_x < 0 ? 0 : (vars->tex_x >= (int)texture->width ? texture->width - 1 : vars->tex_x);
+    uint32_t color = get_mlx_texture_color(texture, vars->tex_x, vars->tex_y);
+    mlx_put_pixel(player->game->wall_layer, x, vars->y, color);
+}
+
 void process_single_ray(t_rays *rays, int x, t_player *player)
 {
     t_process_single_ray_variables vars;
@@ -51,13 +62,7 @@ void process_single_ray(t_rays *rays, int x, t_player *player)
     vars.y = vars.wall_top_pixel;
     while(vars.y < vars.wall_bottom_pixel)
     {
-        vars.tex_pos_y = (vars.y - vars.wall_top_pixel) / (float)vars.wall_strip_height;
-        vars.tex_y = (int)(vars.tex_pos_y * texture->height);
-        vars.tex_y = vars.tex_y < 0 ? 0 : (vars.tex_y >= (int)texture->height ? texture->height - 1 : vars.tex_y);
-        vars.tex_x = (int)(vars.wallX * texture->width);
-        vars.tex_x = vars.tex_x < 0 ? 0 : (vars.tex_x >= (int)texture->width ? texture->width - 1 : vars.tex_x);
-        uint32_t color = get_mlx_texture_color(texture, vars.tex_x, vars.tex_y);
-        mlx_put_pixel(player->game->wall_layer, x, vars.y, color);
+        put_pixels(&vars, player, x, texture);
         vars.y++;
     }
 }
