@@ -35,9 +35,23 @@ void put_pixels(t_process_single_ray_variables *vars, t_player *player, int x, m
     mlx_put_pixel(player->game->wall_layer, x, vars->y, color);
 }
 
+void set_top_bottom_pixel(t_process_single_ray_variables *vars, t_player *player, int x, mlx_texture_t* texture)
+{
+    vars->wall_top_pixel = (SCREEN_HEIGHT / 2) - (vars->wall_strip_height / 2);
+    vars->wall_top_pixel = vars->wall_top_pixel < 0 ? 0 : vars->wall_top_pixel;
+    vars->wall_bottom_pixel = (SCREEN_HEIGHT / 2) + (vars->wall_strip_height / 2);
+    vars->wall_bottom_pixel = vars->wall_bottom_pixel > SCREEN_HEIGHT ? SCREEN_HEIGHT : vars->wall_bottom_pixel;
+    vars->y = vars->wall_top_pixel;
+    while (vars->y < vars->wall_bottom_pixel) {
+        put_pixels(vars, player, x, texture);
+        vars->y++;
+    }
+}
+
 void process_single_ray(t_rays *rays, int x, t_player *player)
 {
     t_process_single_ray_variables vars;
+    mlx_texture_t* texture;
 
     vars.perp_distance = (*rays)[x].distance * cos((*rays)[x].ray_angle - player->rotation_angle);
     vars.distance_proj_plane = (SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2);
@@ -47,24 +61,20 @@ void process_single_ray(t_rays *rays, int x, t_player *player)
         vars.wallX = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
     else
         vars.wallX = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
-    mlx_texture_t* texture;
-    if ((*rays)[x].was_hit_vertical) {
-        texture = ((*rays)[x].ray_angle > PI/2 && (*rays)[x].ray_angle < 3*PI/2) 
-            ? player->game->we_tex : player->game->ea_tex;
-    } else {
-        texture = ((*rays)[x].ray_angle > PI) 
-            ? player->game->so_tex : player->game->no_tex;
-    }
-    vars.wall_top_pixel = (SCREEN_HEIGHT / 2) - (vars.wall_strip_height / 2);
-    vars.wall_top_pixel = vars.wall_top_pixel < 0 ? 0 : vars.wall_top_pixel;
-    vars.wall_bottom_pixel = (SCREEN_HEIGHT / 2) + (vars.wall_strip_height / 2);
-    vars.wall_bottom_pixel = vars.wall_bottom_pixel > SCREEN_HEIGHT ? SCREEN_HEIGHT : vars.wall_bottom_pixel;
-    vars.y = vars.wall_top_pixel;
-    while(vars.y < vars.wall_bottom_pixel)
+    if ((*rays)[x].was_hit_vertical)
     {
-        put_pixels(&vars, player, x, texture);
-        vars.y++;
+        if ((*rays)[x].ray_angle > PI/2 && (*rays)[x].ray_angle < 3*PI/2)
+            texture = player->game->we_tex;
+        else
+            texture = player->game->ea_tex;
+    } else
+    {
+        if ((*rays)[x].ray_angle > PI)
+            texture = player->game->so_tex;
+        else
+            texture = player->game->no_tex;
     }
+    set_top_bottom_pixel(&vars, player, x, texture);
 }
 
 void generate_3d_projection(t_rays *rays, t_player *player)
