@@ -82,24 +82,25 @@ void	add_static_pixels(t_str_access *str_access)
 	}
 }
 
-int	check_obstacle_blocks(float new_player_x, float new_player_y,
-		t_player *player)
+int	check_obstacle_blocks(float new_x, float new_y, t_player *player)
 {
 	t_map	*map;
-	int		column_block;
-	int		row_block;
+	float	angle;
+	int		col;
+	int		row;
 
-	column_block = (new_player_x / CUBE_SIZE);
-	row_block = (new_player_y / CUBE_SIZE);
 	map = player->map;
-	if (row_block < 0 || row_block >= map->map_height || column_block < 0
-		|| column_block >= map->map_width)
+	angle = 0.0f;
+	while (angle < 2 * PI)
 	{
-		return (1);
-	}
-	if (map->grid[row_block][column_block] == '1')
-	{
-		return (1);
+		col = (new_x + MOVING_OBJECT_SIZE * cos(angle)) / CUBE_SIZE;
+		row = (new_y + MOVING_OBJECT_SIZE * sin(angle)) / CUBE_SIZE;
+		if (row < 0 || row >= map->map_height || col < 0
+			|| col >= map->map_width)
+			return (1);
+		if (map->grid[row][col] == '1')
+			return (1);
+		angle += PI / 4;
 	}
 	return (0);
 }
