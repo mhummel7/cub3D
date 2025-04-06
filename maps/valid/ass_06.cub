@@ -1,7 +1,7 @@
-NO./assets/no.png
-WE./assets/we.png
-SO./assets/so.png
-EA./assets/ea.png
+NO textures/north.png
+WE textures/west.png
+SO textures/south.png
+EA textures/east.png
 
 F 66,110,00065
 

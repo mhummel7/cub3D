@@ -1,7 +1,7 @@
-NO./assets/tile_13.png
-WE./assets/tile_12.png
-SO./assets/tile_14.png
-EA./assets/tile_15.png
+NO textures/north.png
+WE textures/west.png
+SO textures/south.png
+EA textures/east.png
 
 F +66,+110,+65
 C +142,+191,+147

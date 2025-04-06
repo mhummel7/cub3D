@@ -1,7 +1,7 @@
-NO ./assets/tile_12.png
-WE ./assets/tile_14.png
-SO ./assets/tile_16.png
-EA ./assets/tile_17.png
+NO textures/north.png
+WE textures/west.png
+SO textures/south.png
+EA textures/east.png
 F 110,130,110
 C 150,170,255
 

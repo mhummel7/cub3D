@@ -1,14 +1,14 @@
-EA ./assets/ea.png
+EA textures/east.png
 
 F 110,130,110
 
-NO ./assets/no.png
+NO textures/north.png
 
 C 150,170,255
 
-WE ./assets/we.png
+WE textures/west.png
 
-SO ./assets/so.png
+SO textures/south.png
 
 111111111111111111111111111
 10S100000000000000000000001
