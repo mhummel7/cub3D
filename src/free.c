@@ -49,11 +49,9 @@ void	free_game(t_game *game)
 		i = 0;
 		while (game->map[i])
 		{
-			printf("Freeing map[%d]: %p\n", i, game->map[i]);
 			free(game->map[i]);
 			i++;
 		}
-		printf("Freeing map array: %p\n", game->map);
 		free(game->map);
 	}
 }
