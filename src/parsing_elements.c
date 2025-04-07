@@ -75,9 +75,22 @@ int	check_length(char **split)
 
 void	parse_element(t_game *game, char *line)
 {
+	char	*processed_line;
 	char	**split;
+	int		i;
 
-	split = ft_split(line, ' ');
+	processed_line = strdup(line);
+	if (!processed_line)
+		error_exit("Memory allocation failed");
+	i = 0;
+	while (processed_line[i])
+	{
+		if (processed_line[i] == '\t')
+			processed_line[i] = ' ';
+		i++;
+	}
+	split = ft_split(processed_line, ' ');
+	free(processed_line);
 	if (!split[0] || !split[1] || check_length(split) > 4)
 		error_exit("Invalid element format");
 	if (ft_strcmp(split[0], "F") == 0)
