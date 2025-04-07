@@ -85,7 +85,7 @@ void	parse_element(t_game *game, char *line)
 	i = 0;
 	while (processed_line[i])
 	{
-		if (processed_line[i] == '\t')
+		if (processed_line[i] == '\t' || processed_line[i] == ',')
 			processed_line[i] = ' ';
 		i++;
 	}
