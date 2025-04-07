@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:42:11 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/07 11:58:07 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:25:52 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ typedef struct s_process_single_ray_variables
 void				draw_line(t_player *player, t_game *game, float dest_x,
 						float dest_y);
 
-						
+
 //parsing_map.c
 void parse_cub_file(char *filename, t_game *game);
 void parse_map(t_game *game, char *line, int fd);
@@ -201,9 +201,11 @@ void skip_to_map(int fd, char **line);
 
 // free.c */
 void				free_game(t_game *game);
+void				free_str_access(t_str_access *str_access);
 
 // utils.c */
 void				error_exit(const char *message);
+void				error_exit_game(const char *message, t_game *game);
 void				strip_newline(char *line);
 
 // parsing_elements.c

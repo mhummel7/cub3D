@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:27:50 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/11 12:03:26 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:26:21 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,43 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	validate_texture_path(char *path)
+void	validate_texture_path(char *path, t_game *game)
 {
 	int	fd;
 
 	if (!path || !*path)
-		error_exit("Empty texture path");
+		error_exit_game("Empty texture path", game);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		error_exit("Texture file not found");
+		error_exit_game("Texture file not found", game);
 	close(fd);
 }
 
 void	set_texture(t_game *game, char *id, char *value)
 {
-	validate_texture_path(value);
+	validate_texture_path(value, game);
 	if (ft_strcmp(id, "NO") == 0)
 	{
 		if (!set_texture_direction(&(game->no_texture), &(game->no_tex), value))
-			error_exit("Failed to load NO texture");
+			error_exit_game("Failed to load NO texture", game);
 	}
 	else if (ft_strcmp(id, "SO") == 0)
 	{
 		if (!set_texture_direction(&(game->so_texture), &(game->so_tex), value))
-			error_exit("Failed to load SO texture");
+			error_exit_game("Failed to load SO texture", game);
 	}
 	else if (ft_strcmp(id, "WE") == 0)
 	{
 		if (!set_texture_direction(&(game->we_texture), &(game->we_tex), value))
-			error_exit("Failed to load WE texture");
+			error_exit_game("Failed to load WE texture", game);
 	}
 	else if (ft_strcmp(id, "EA") == 0)
 	{
 		if (!set_texture_direction(&(game->ea_texture), &(game->ea_tex), value))
-			error_exit("Failed to load EA texture");
+			error_exit_game("Failed to load EA texture", game);
 	}
 	else
-		error_exit("Unknown element identifier");
+		error_exit_game("Unknown element identifier", game);
 }
 
 int	check_length(char **split)
@@ -92,7 +92,7 @@ void	parse_element(t_game *game, char *line)
 	split = ft_split(processed_line, ' ');
 	free(processed_line);
 	if (!split[0] || !split[1] || check_length(split) > 4)
-		error_exit("Invalid element format");
+		error_exit_game("Invalid element format", game);
 	if (ft_strcmp(split[0], "F") == 0)
 		game->floor_color = get_rgb(split + 1);
 	else if (ft_strcmp(split[0], "C") == 0)
