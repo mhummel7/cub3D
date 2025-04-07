@@ -19,7 +19,7 @@ void	check_valid_values(int *rgb)
 	k = 0;
 	while (k < 3)
 	{
-		if (rgb[k] < 0 || rgb[k] > 255)
+		if (!rgb[k] || rgb[k] < 0 || rgb[k] > 255)
 			error_exit("RGB values must be in range [0,255]");
 		k++;
 	}
