@@ -6,13 +6,13 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:54:57 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/07 11:55:01 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:14:45 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void parse_map_lines(t_game *game, char *line, int fd, int *i)
+void	parse_map_lines(t_game *game, char *line, int fd, int *i)
 {
 	char	*map_line;
 
@@ -39,10 +39,10 @@ void parse_map_lines(t_game *game, char *line, int fd, int *i)
 	}
 }
 
-void set_map_width(t_game *game)
+void	set_map_width(t_game *game)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	while (i < game->map_height)
@@ -54,12 +54,12 @@ void set_map_width(t_game *game)
 	}
 }
 
-void handle_line(char *line, t_game *game, int *map_started, int fd)
+void	handle_line(char *line, t_game *game, int *map_started, int fd)
 {
 	if (ft_strlen(line) == 0)
 	{
 		if (!*map_started)
-			return;
+			return ;
 		*map_started = 2;
 	}
 	else if (is_map_line(line) && !*map_started)
@@ -71,7 +71,7 @@ void handle_line(char *line, t_game *game, int *map_started, int fd)
 		parse_element(game, line);
 }
 
-void read_map_lines(t_game *game, char *line, int fd, int map_size)
+void	read_map_lines(t_game *game, char *line, int fd, int map_size)
 {
 	int		i;
 	char	*temp_line;
@@ -96,7 +96,7 @@ void read_map_lines(t_game *game, char *line, int fd, int map_size)
 	}
 }
 
-void skip_to_map(int fd, char **line)
+void	skip_to_map(int fd, char **line)
 {
 	char	*temp_line;
 

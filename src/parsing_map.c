@@ -6,13 +6,14 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:28:22 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/07 11:58:29 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:14:41 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	parse_cub_file_init(char *filename, t_game *game, int *fd, int *map_started)
+static void	parse_cub_file_init(char *filename, t_game *game, int *fd,
+		int *map_started)
 {
 	*fd = open(filename, O_RDONLY);
 	if (*fd < 0)
@@ -81,8 +82,8 @@ static void	allocate_map(t_game *game, int map_size)
 
 void	parse_map(t_game *game, char *line, int fd)
 {
-	int		map_size;
-	int		new_fd;
+	int	map_size;
+	int	new_fd;
 
 	if (!game->filename)
 		error_exit("Filename not set");
