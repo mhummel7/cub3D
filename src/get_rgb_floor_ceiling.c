@@ -19,7 +19,7 @@ void	check_valid_values(int *rgb)
 	k = 0;
 	while (k < 3)
 	{
-		if (!rgb[k] || rgb[k] < 0 || rgb[k] > 255)
+		if (rgb[k] < 0 || rgb[k] > 255)
 			error_exit("RGB values must be in range [0,255]");
 		k++;
 	}
@@ -37,6 +37,13 @@ bool	incorrect_value_between(char *str)
 		i++;
 	}
 	return (false);
+}
+
+void check_free_possible(char	**values, int component)
+{
+	free_split(values);
+	if (component < 3)
+		error_exit("Not at values were setted");
 }
 
 void	parse_rgb_values(char **line, int *rgb)
@@ -63,7 +70,7 @@ void	parse_rgb_values(char **line, int *rgb)
 			component++;
 			j++;
 		}
-		free_split(values);
+		check_free_possible(values, component);
 		i++;
 	}
 }
