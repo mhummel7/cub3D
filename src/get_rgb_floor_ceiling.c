@@ -39,9 +39,8 @@ bool	incorrect_value_between(char *str)
 	return (false);
 }
 
-void check_free_possible(char	**values, int component)
+void check_free_possible(int component)
 {
-	free_split(values);
 	if (component < 3)
 		error_exit("Not at values were setted");
 }
@@ -70,9 +69,10 @@ void	parse_rgb_values(char **line, int *rgb)
 			component++;
 			j++;
 		}
-		check_free_possible(values, component);
+		free_split(values);
 		i++;
 	}
+	check_free_possible(component);
 }
 
 int	get_rgb(char **line)
