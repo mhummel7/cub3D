@@ -16,6 +16,7 @@ SRC = $(SRC_DIR)/main.c \
 	  $(SRC_DIR)/check_ray_between_limits.c \
 	  $(SRC_DIR)/free.c \
 	  $(SRC_DIR)/parsing_map.c \
+	  $(SRC_DIR)/parsing_utils.c \
 	  $(SRC_DIR)/parsing_elements.c \
 	  $(SRC_DIR)/validate_map.c \
 	  $(SRC_DIR)/utils.c \
