@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rgb_floor_ceiling.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 18:41:19 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/05 18:41:20 by frocha           ###   ########.fr       */
+/*   Updated: 2025/04/07 11:51:12 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	parse_rgb_values(char **line, int *rgb)
 
 int	get_rgb(char **line)
 {
-	int rgb[3];
+	int	rgb[3];
 
 	rgb[0] = 0;
 	rgb[1] = 0;

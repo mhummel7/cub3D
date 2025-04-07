@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 22:49:06 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/04 22:49:07 by frocha           ###   ########.fr       */
+/*   Updated: 2025/04/07 11:40:10 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_mlx(t_game *game)
 
 void	init_game(t_game *game)
 {
+	game->filename = NULL;
 	game->no_texture = NULL;
 	game->so_texture = NULL;
 	game->we_texture = NULL;
