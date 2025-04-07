@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:42:11 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/03 13:02:00 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 11:58:07 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 
 typedef struct s_game
 {
+	char			*filename;
 	char			*no_texture;
 	char			*so_texture;
 	char			*we_texture;
@@ -186,10 +187,17 @@ typedef struct s_process_single_ray_variables
 void				draw_line(t_player *player, t_game *game, float dest_x,
 						float dest_y);
 
-// parsing_map.c */
-void				parse_cub_file(char *filename, t_game *game);
-void				parse_map(t_game *game, char *line, int fd);
-void				parse_map_lines(t_game *game, char *line, int fd, int *i);
+						
+//parsing_map.c
+void parse_cub_file(char *filename, t_game *game);
+void parse_map(t_game *game, char *line, int fd);
+
+// parsing_utils.c
+void parse_map_lines(t_game *game, char *line, int fd, int *i);
+void set_map_width(t_game *game);
+void handle_line(char *line, t_game *game, int *map_started, int fd);
+void read_map_lines(t_game *game, char *line, int fd, int map_size);
+void skip_to_map(int fd, char **line);
 
 // free.c */
 void				free_game(t_game *game);
