@@ -25,6 +25,20 @@ void	check_valid_values(int *rgb)
 	}
 }
 
+bool	incorrect_value_between(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]) || (33 < str[i] && str[i] < 47))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 void	parse_rgb_values(char **line, int *rgb)
 {
 	int		i;
@@ -40,6 +54,11 @@ void	parse_rgb_values(char **line, int *rgb)
 		j = 0;
 		while (values[j] && component < 3)
 		{
+			if (incorrect_value_between(values[j]))
+			{
+				free_split(values);
+				error_exit("RGB values must be in range [0,255]");
+			}
 			rgb[component] = ft_atoi(values[j]);
 			component++;
 			j++;
