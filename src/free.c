@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:54:17 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/07 11:40:35 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:33:56 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ void	free_game(t_game *game)
 		printf("Freeing map array: %p\n", game->map);
 		free(game->map);
 	}
+}
+
+void	free_str_access(t_str_access *str_access)
+{
+	if (str_access->player)
+		free(str_access->player);
+	if (str_access->map)
+		free(str_access->map);
+	if (str_access->game)
+		free(str_access->game);
 }

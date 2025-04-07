@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:28:22 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/07 12:14:41 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:27:19 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_cub_file(char *filename, t_game *game)
 	close(fd);
 	if (!game->no_texture || !game->so_texture || !game->we_texture
 		|| !game->ea_texture || !game->map)
-		error_exit("Missing required elements");
+		error_exit_game("Missing required elements", game);
 }
 
 static int	count_map_lines(int fd)
@@ -77,7 +77,7 @@ static void	allocate_map(t_game *game, int map_size)
 {
 	game->map = malloc(sizeof(char *) * (map_size + 1));
 	if (!game->map)
-		error_exit("Malloc failed for map allocation");
+		error_exit_game("Malloc failed for map allocation", game);
 }
 
 void	parse_map(t_game *game, char *line, int fd)
@@ -86,16 +86,16 @@ void	parse_map(t_game *game, char *line, int fd)
 	int	new_fd;
 
 	if (!game->filename)
-		error_exit("Filename not set");
+		error_exit_game("Filename not set", game);
 	map_size = count_map_lines(fd);
 	allocate_map(game, map_size);
 	close(fd);
 	new_fd = open(game->filename, O_RDONLY);
 	if (new_fd < 0)
-		error_exit("Cannot reopen file");
+		error_exit_game("Cannot reopen file", game);
 	skip_to_map(new_fd, &line);
 	if (!line)
-		error_exit("No valid map line found");
+		error_exit_game("No valid map line found", game);
 	read_map_lines(game, line, new_fd, map_size);
 	free(line);
 	game->map[map_size] = NULL;

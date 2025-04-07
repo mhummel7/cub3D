@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:28:51 by mhummel           #+#    #+#             */
-/*   Updated: 2025/03/13 11:42:18 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:25:59 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ void	error_exit(const char *message)
 	write(2, "Error: ", 7);
 	write(2, message, ft_strlen(message));
 	write(2, "\n", 1);
+	exit(EXIT_FAILURE);
+}
+
+void	error_exit_game(const char *message, t_game *game)
+{
+	write(2, "Error: ", 7);
+	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
+	if (game)
+		free_game(game);
 	exit(EXIT_FAILURE);
 }
 
