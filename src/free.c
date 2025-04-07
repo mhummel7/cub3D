@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:54:17 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/02 16:04:21 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/07 11:40:35 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	free_game(t_game *game)
 {
 	int	i;
 
+	if (game->filename)
+		free(game->filename);
 	free_game_char(game);
 	free_game_textures(game);
 	if (game->map)
