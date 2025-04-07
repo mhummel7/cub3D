@@ -1,7 +1,7 @@
-NO ./assets/no
-WE ./assets/we
-SO ./assets/so
-EA ./assets/ea
+NO textures/north.png
+SO textures/south.png
+WE textures/west.png
+EA textures/east.png
 
 F 255,0,0+255,0,0
 C 200,8,8

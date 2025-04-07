@@ -1,7 +1,7 @@
-NO ./assets/doom_6.png
-WE ./assets/doom_21.png
-SO ./assets/doom_17.png
-EA ./assets/doom_19.png
+NO textures/north.png
+SO textures/south.png
+WE textures/west.png
+EA textures/east.png
 F 110,130,110
 C 150,170,255
 
