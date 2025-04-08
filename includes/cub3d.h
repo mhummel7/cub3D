@@ -93,7 +93,7 @@ typedef struct s_ray
 	int				is_ray_facing_down;
 	int				is_ray_facing_left;
 	int				is_ray_facing_right;
-} t_rays[NUM_RAYS];
+}					t_rays[NUM_RAYS];
 
 typedef struct s_str_access
 {
