@@ -77,8 +77,8 @@ void	handle_line(char *line, t_game *game, int *map_started, int fd)
 		*map_started = 1;
 		if (!check_not_set_variable(game))
 		{
-			error_exit("Variables not setted");
 			free_without(game);
+			error_exit("Variables not setted");
 		}
 		parse_map(game, line, fd);
 	}
