@@ -93,7 +93,7 @@ typedef struct s_ray
 	int				is_ray_facing_down;
 	int				is_ray_facing_left;
 	int				is_ray_facing_right;
-}					t_rays[NUM_RAYS];
+} t_rays[NUM_RAYS];
 
 typedef struct s_str_access
 {
@@ -187,17 +187,18 @@ typedef struct s_process_single_ray_variables
 void				draw_line(t_player *player, t_game *game, float dest_x,
 						float dest_y);
 
-
-//parsing_map.c
-void parse_cub_file(char *filename, t_game *game);
-void parse_map(t_game *game, char *line, int fd);
+// parsing_map.c
+void				parse_cub_file(char *filename, t_game *game);
+void				parse_map(t_game *game, char *line, int fd);
 
 // parsing_utils.c
-void parse_map_lines(t_game *game, char *line, int fd, int *i);
-void set_map_width(t_game *game);
-void handle_line(char *line, t_game *game, int *map_started, int fd);
-void read_map_lines(t_game *game, char *line, int fd, int map_size);
-void skip_to_map(int fd, char **line);
+void				parse_map_lines(t_game *game, char *line, int fd, int *i);
+void				set_map_width(t_game *game);
+void				handle_line(char *line, t_game *game, int *map_started,
+						int fd);
+void				read_map_lines(t_game *game, char *line, int fd,
+						int map_size);
+void				skip_to_map(int fd, char **line);
 
 // free.c */
 void				free_game(t_game *game);
