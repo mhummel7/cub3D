@@ -54,6 +54,16 @@ void	set_map_width(t_game *game)
 	}
 }
 
+bool check_not_set_variable(t_game *game)
+{
+	if (!game->no_tex || !game->ea_tex || !game->so_tex || !game->no_tex ||
+	!game->floor_color || !game->ceiling_color)
+	{
+		return (false);
+	}
+	return (true);
+}
+
 void	handle_line(char *line, t_game *game, int *map_started, int fd)
 {
 	if (ft_strlen(line) == 0)
@@ -65,6 +75,11 @@ void	handle_line(char *line, t_game *game, int *map_started, int fd)
 	else if (is_map_line(line) && !*map_started)
 	{
 		*map_started = 1;
+		if (!check_not_set_variable(game))
+		{
+			error_exit("Variables not setted");
+			free_without(game);
+		}
 		parse_map(game, line, fd);
 	}
 	else if (!*map_started)
