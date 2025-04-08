@@ -32,14 +32,15 @@ bool	incorrect_value_between(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalpha(str[i]) || (33 < str[i] && str[i] < 47))
+		if (ft_isalpha(str[i]) || (33 < str[i] && str[i] < 43) || (43 < str[i]
+				&& str[i] < 47))
 			return (true);
 		i++;
 	}
 	return (false);
 }
 
-void check_free_possible(int component)
+void	check_free_possible(int component)
 {
 	if (component < 3)
 		error_exit("Not at values were setted");
