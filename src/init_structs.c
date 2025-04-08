@@ -51,6 +51,10 @@ void	init_game(t_game *game)
 	game->so_texture = NULL;
 	game->we_texture = NULL;
 	game->ea_texture = NULL;
+	game->no_tex = NULL;
+	game->so_tex = NULL;
+	game->we_tex = NULL;
+	game->ea_tex = NULL;
 	game->floor_color = -1;
 	game->ceiling_color = -1;
 	game->map = NULL;

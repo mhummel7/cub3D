@@ -75,11 +75,6 @@ void	handle_line(char *line, t_game *game, int *map_started, int fd)
 	else if (is_map_line(line) && !*map_started)
 	{
 		*map_started = 1;
-		if (!check_not_set_variable(game))
-		{
-			free_without(game);
-			error_exit("Variables not setted");
-		}
 		parse_map(game, line, fd);
 	}
 	else if (!*map_started)

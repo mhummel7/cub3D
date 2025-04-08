@@ -202,7 +202,6 @@ void skip_to_map(int fd, char **line);
 // free.c */
 void				free_game(t_game *game);
 void				free_str_access(t_str_access *str_access);
-void				free_without(t_game *game);
 
 // utils.c */
 void				error_exit(const char *message);

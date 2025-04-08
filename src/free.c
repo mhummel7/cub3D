@@ -65,12 +65,3 @@ void	free_str_access(t_str_access *str_access)
 	if (str_access->game)
 		free(str_access->game);
 }
-
-void	free_without(t_game *game)
-{
-
-	if (game->filename)
-		free(game->filename);
-	free_game_char(game);
-	free_game_textures(game);
-}
