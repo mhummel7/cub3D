@@ -6,21 +6,11 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:39:36 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/07 12:35:39 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:27:38 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-// void	check_leaks(void)
-// {
-// 	char	pid_str[16];
-
-// 	sprintf(pid_str, "%d", getpid());
-// 	printf("Checking for leaks on PID %s...\n", pid_str);
-// 	system("leaks cub3D > leaks_report.txt 2>&1");
-// 	printf("Leak check complete. See 'leaks_report.txt' for details.\n");
-// }
 
 void	reset_img(int width, int height, uint32_t colour, mlx_image_t *img)
 {
@@ -100,7 +90,6 @@ int	main(int argc, char **argv)
 
 	if (check_argc(argc, argv))
 		return (1);
-	// atexit(check_leaks); for leaks, uncheck the first function in the main if you want to test yourself, if not just delete
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	initiate_str_access_values(&stru_access);
 	game = stru_access.game;
@@ -119,7 +108,6 @@ int	main(int argc, char **argv)
 	mlx_key_hook(game->mlx, keys_hook, stru_access.player);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
-	free_game(game);
-	free_str_access(&stru_access);
+	free_game(&stru_access);
 	return (0);
 }

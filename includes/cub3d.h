@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:42:11 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/07 12:25:52 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:34:04 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,13 +201,15 @@ void				read_map_lines(t_game *game, char *line, int fd,
 void				skip_to_map(int fd, char **line);
 
 // free.c */
-void				free_game(t_game *game);
+void				free_game(t_str_access *str_access);
 void				free_str_access(t_str_access *str_access);
+void				free_game2(t_game *game);
 
 // utils.c */
 void				error_exit(const char *message);
 void				error_exit_game(const char *message, t_game *game);
 void				strip_newline(char *line);
+void				free_split_error_exit(char **values);
 
 // parsing_elements.c
 void				parse_element(t_game *game, char *line);

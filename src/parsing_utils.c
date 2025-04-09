@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:54:57 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/07 12:29:49 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:24:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	set_map_width(t_game *game)
 	}
 }
 
-bool check_not_set_variable(t_game *game)
+bool	check_not_set_variable(t_game *game)
 {
-	if (!game->no_tex || !game->ea_tex || !game->so_tex || !game->no_tex ||
-	!game->floor_color || !game->ceiling_color)
+	if (!game->no_tex || !game->ea_tex || !game->so_tex || !game->no_tex
+		|| !game->floor_color || !game->ceiling_color)
 	{
 		return (false);
 	}
@@ -104,23 +104,4 @@ void	read_map_lines(t_game *game, char *line, int fd, int map_size)
 		free(temp_line);
 		i++;
 	}
-}
-
-void	skip_to_map(int fd, char **line)
-{
-	char	*temp_line;
-
-	temp_line = get_next_line(fd);
-	while (temp_line != NULL)
-	{
-		strip_newline(temp_line);
-		if (is_map_line(temp_line))
-		{
-			*line = temp_line;
-			return ;
-		}
-		free(temp_line);
-		temp_line = get_next_line(fd);
-	}
-	*line = NULL;
 }
