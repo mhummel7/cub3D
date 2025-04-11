@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 22:49:06 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/07 11:40:10 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/11 11:10:44 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	init_game(t_game *game)
 	game->so_tex = NULL;
 	game->we_tex = NULL;
 	game->ea_tex = NULL;
-	game->floor_color = -1;
-	game->ceiling_color = -1;
+	game->floor_color = 0xFFFFFFFF;
+	game->ceiling_color = 0xFFFFFFFF;
 	game->map = NULL;
 	game->map_height = 0;
 	game->map_width = 0;
