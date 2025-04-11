@@ -22,7 +22,7 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-int	distance_ray2wall(float origin_x, float origin_y, float destination_x,
+float	distance_ray2wall(float origin_x, float origin_y, float destination_x,
 		float destination_y)
 {
 	return (sqrt((destination_x - origin_x) * (destination_x - origin_x)

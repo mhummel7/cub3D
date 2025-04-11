@@ -247,7 +247,7 @@ int					is_wall(float x, float y, t_player *player);
 /* draw_rays.c */
 void				cast_all_rays(t_player *player, t_rays *rays);
 void				render_rays(t_player *player, t_rays *rays);
-int					distance_ray2wall(float origin_x, float origin_y,
+float				distance_ray2wall(float origin_x, float origin_y,
 						float destination_x, float destination_y);
 
 /* ray_wall_hit.c */
