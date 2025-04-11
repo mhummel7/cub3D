@@ -83,7 +83,7 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 
 	(void)player;
 	vars.distance_proj_plane = (SCREEN_WIDTH / 2) / tan((60 * (PI / 180)) / 2);
-	vars.projected_wall_height = (CUBE_SIZE / rays[x]->distance) * vars.distance_proj_plane;
+	vars.projected_wall_height = (CUBE_SIZE / (*rays)[x].distance) * vars.distance_proj_plane;
 	vars.wall_strip_height = (int)vars.projected_wall_height;
 	set_top_bottom_pixel(&vars, player, x, rays);
 }

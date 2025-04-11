@@ -30,7 +30,7 @@ void	find_horz_wall_hit(t_horz_wall_hit_data *horz_wall_hit_data,
 		{
 			horz_wall_hit_data->horz_hit_x = ray_data.next_horz_touch_wall_x;
 			horz_wall_hit_data->horz_hit_y = ray_data.next_horz_touch_wall_y;
-			horz_wall_hit_data->found_horz_hit = true;
+			horz_wall_hit_data->found_horz_hit = 1;
 			break ;
 		}
 		else
@@ -59,7 +59,7 @@ void	find_vert_wall_hit(t_vert_wall_hit_data *vert_wall_hit_data,
 		{
 			vert_wall_hit_data->vert_hit_x = ray_data.next_vert_touch_wall_x;
 			vert_wall_hit_data->vert_hit_y = ray_data.next_vert_touch_wall_y;
-			vert_wall_hit_data->found_vert_hit = true;
+			vert_wall_hit_data->found_vert_hit = 1;
 			break ;
 		}
 		else
@@ -84,7 +84,7 @@ void	find_distance(t_hit_distance_wall *hit_distance_wall,
 		t_horz_wall_hit_data *horz_wall_hit_data,
 		t_vert_wall_hit_data *vert_wall_hit_data, t_player *player)
 {
-	if (horz_wall_hit_data->found_horz_hit)
+	if (horz_wall_hit_data->found_horz_hit > 0)
 	{
 		hit_distance_wall->horz = distance_ray2wall(player->x, player->y,
 				horz_wall_hit_data->horz_hit_x,
@@ -94,7 +94,7 @@ void	find_distance(t_hit_distance_wall *hit_distance_wall,
 	{
 		hit_distance_wall->horz = INT_MAX;
 	}
-	if (vert_wall_hit_data->found_vert_hit)
+	if (vert_wall_hit_data->found_vert_hit > 0)
 	{
 		hit_distance_wall->vert = distance_ray2wall(player->x, player->y,
 				vert_wall_hit_data->vert_hit_x,
@@ -111,8 +111,8 @@ void	init_wall_hit_data_vars(t_horz_wall_hit_data *horz_hit_data,
 {
 	horz_hit_data->horz_hit_x = 0;
 	horz_hit_data->horz_hit_y = 0;
-	horz_hit_data->found_horz_hit = false;
+	horz_hit_data->found_horz_hit = 0;
 	vert_hit_data->vert_hit_x = 0;
 	vert_hit_data->vert_hit_y = 0;
-	vert_hit_data->found_vert_hit = false;
+	vert_hit_data->found_vert_hit = 0;
 }

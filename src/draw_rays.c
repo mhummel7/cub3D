@@ -25,7 +25,7 @@ float	normalize_angle(float angle)
 int	distance_ray2wall(float origin_x, float origin_y, float destination_x,
 		float destination_y)
 {
-	return (sqrt((destination_x - origin_x) * (destination_x - origin_x)
+	return (sqrtf((destination_x - origin_x) * (destination_x - origin_x)
 			+ (destination_y - origin_y) * (destination_y - origin_y)));
 }
 
@@ -64,8 +64,6 @@ void	cast_all_rays(t_player *player, t_rays *rays)
 	while (counter < NUM_RAYS)
 	{
 		cast_ray(ray_angle, player, counter, rays);
-		printf("NN: %i\n",rays[counter]->was_hit_vertical);
-		printf("DD: %f\n",rays[counter]->distance);
 		ray_angle += (60 * (PI / 180)) / NUM_RAYS;
 		counter++;
 	}
