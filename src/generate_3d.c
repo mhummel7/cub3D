@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_3d.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 22:53:06 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/04 22:53:07 by frocha           ###   ########.fr       */
+/*   Updated: 2025/04/11 11:58:56 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 		* vars.distance_proj_plane;
 	vars.wall_strip_height = (int)vars.projected_wall_height;
 	if ((*rays)[x].was_hit_vertical)
-		vars.wall_x = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
+		vars.wall_x = fmod((*rays)[x].wall_hit_y, CUBE_SIZE) / CUBE_SIZE;
+		// vars.wall_x = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
 	else
-		vars.wall_x = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
+		vars.wall_x = fmod((*rays)[x].wall_hit_x, CUBE_SIZE) / CUBE_SIZE;
+		// vars.wall_x = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
 	if ((*rays)[x].was_hit_vertical)
 	{
 		if ((*rays)[x].ray_angle > PI / 2 && (*rays)[x].ray_angle < 3 * PI / 2)
