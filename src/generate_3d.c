@@ -36,9 +36,8 @@ void	put_pixels(t_process_single_ray_variables *vars, t_player *player,
 {
 	uint32_t	color;
 
-	vars->tex_pos_y = (vars->y - vars->wall_top_pixel)
-		/ (float)vars->wall_strip_height;
-	vars->tex_y = (int)(vars->tex_pos_y * texture->height);
+	vars->tex_pos_y = vars->y + (vars->wall_strip_height / 2) - (SCREEN_HEIGHT / 2);
+	vars->tex_y = (int)(vars->tex_pos_y * ((float)texture->height / vars->wall_strip_height));
 	if (vars->tex_y < 0)
 		vars->tex_y = 0;
 	else if (vars->tex_y >= (int)texture->height)
