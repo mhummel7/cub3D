@@ -64,8 +64,6 @@ void	cast_all_rays(t_player *player, t_rays *rays)
 	while (counter < NUM_RAYS)
 	{
 		cast_ray(ray_angle, player, counter, rays);
-		printf("NN: %i\n",rays[counter]->was_hit_vertical);
-		printf("DD: %f\n",rays[counter]->distance);
 		ray_angle += (60 * (PI / 180)) / NUM_RAYS;
 		counter++;
 	}

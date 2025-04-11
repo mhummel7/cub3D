@@ -34,22 +34,22 @@ uint32_t	get_mlx_texture_color(mlx_texture_t *texture, int x, int y)
 void	put_pixels(t_process_single_ray_variables *vars, t_player *player,
 		int x, mlx_texture_t *texture)
 {
-	//uint32_t	color;
-	(void)texture;
-	// vars->tex_pos_y = (vars->y - vars->wall_top_pixel)
-	// 	/ (float)vars->wall_strip_height;
-	// vars->tex_y = (int)(vars->tex_pos_y * texture->height);
-	// if (vars->tex_y < 0)
-	// 	vars->tex_y = 0;
-	// else if (vars->tex_y >= (int)texture->height)
-	// 	vars->tex_y = texture->height - 1;
-	// vars->tex_x = (int)(vars->wall_x * texture->width);
-	// if (vars->tex_x < 0)
-	// 	vars->tex_x = 0;
-	// else if (vars->tex_x >= (int)texture->width)
-	// 	vars->tex_x = texture->width - 1;
-	//color = get_mlx_texture_color(texture, vars->tex_x, vars->tex_y);
-	mlx_put_pixel(player->game->wall_layer, x, vars->y, 0xFFFFFFFF);
+	uint32_t	color;
+
+	vars->tex_pos_y = (vars->y - vars->wall_top_pixel)
+		/ (float)vars->wall_strip_height;
+	vars->tex_y = (int)(vars->tex_pos_y * texture->height);
+	if (vars->tex_y < 0)
+		vars->tex_y = 0;
+	else if (vars->tex_y >= (int)texture->height)
+		vars->tex_y = texture->height - 1;
+	vars->tex_x = (int)(vars->wall_x * texture->width);
+	if (vars->tex_x < 0)
+		vars->tex_x = 0;
+	else if (vars->tex_x >= (int)texture->width)
+		vars->tex_x = texture->width - 1;
+	color = get_mlx_texture_color(texture, vars->tex_x, vars->tex_y);
+	mlx_put_pixel(player->game->wall_layer, x, vars->y, color);
 }
 
 void	set_top_bottom_pixel(t_process_single_ray_variables *vars,
@@ -81,10 +81,23 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 {
 	t_process_single_ray_variables	vars;
 
-	(void)player;
+	vars.perp_distance = (*rays)[x].distance * cos((*rays)[x].ray_angle
+			- player->rotation_angle);
 	vars.distance_proj_plane = (SCREEN_WIDTH / 2) / tan((60 * (PI / 180)) / 2);
-	vars.projected_wall_height = (CUBE_SIZE / rays[x]->distance) * vars.distance_proj_plane;
+	vars.projected_wall_height = (CUBE_SIZE / vars.perp_distance)
+		* vars.distance_proj_plane;
 	vars.wall_strip_height = (int)vars.projected_wall_height;
+	if ((*rays)[x].was_hit_vertical)
+		vars.wall_x = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
+	else
+		vars.wall_x = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
+	if ((*rays)[x].was_hit_vertical)
+	{
+		if ((*rays)[x].ray_angle > PI / 2 && (*rays)[x].ray_angle < 3 * PI / 2)
+			vars.texture = player->game->we_tex;
+		else
+			vars.texture = player->game->ea_tex;
+	}
 	set_top_bottom_pixel(&vars, player, x, rays);
 }
 

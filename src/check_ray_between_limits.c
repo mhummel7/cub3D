@@ -15,9 +15,9 @@
 bool	check_limits_horz_ray(t_ray_wall_hit_horz *horz_ray_data, t_game *game)
 {
 	if (horz_ray_data->next_horz_touch_wall_x >= 0
-		&& horz_ray_data->next_horz_touch_wall_x <= game->window_width
+		&& horz_ray_data->next_horz_touch_wall_x < game->window_width
 		&& horz_ray_data->next_horz_touch_wall_y >= 0
-		&& horz_ray_data->next_horz_touch_wall_y <= game->window_height)
+		&& horz_ray_data->next_horz_touch_wall_y < game->window_height)
 	{
 		return (true);
 	}
