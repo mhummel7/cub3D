@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 18:41:19 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/09 15:33:49 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/11 11:19:48 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ void	parse_rgb_values(char **line, int *rgb)
 		j = 0;
 		while (values[j] && component < 3)
 		{
-			if (incorrect_value_between(values[j]))
-			{
+			if (incorrect_value_between(values[j]) || ft_strlen(values[j]) > 3)
 				free_split_error_exit(values);
-			}
 			rgb[component] = ft_atoi(values[j]);
 			component++;
 			j++;
