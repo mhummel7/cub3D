@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:39:36 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/09 15:27:38 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/14 12:44:16 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	main(int argc, char **argv)
 	init_mlx(game);
 	init_img_to_window(game);
 	add_static_pixels(&stru_access);
-	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->floor_color,
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT / 2, game->ceiling_color,
 		game->background_layer);
-	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->ceiling_color,
+	reset_img(SCREEN_WIDTH, SCREEN_HEIGHT, game->floor_color,
 		game->background_layer);
 	mlx_loop_hook(game->mlx, render, &stru_access);
 	mlx_key_hook(game->mlx, keys_hook, stru_access.player);
