@@ -184,6 +184,16 @@ typedef struct s_process_single_ray_variables
 	mlx_texture_t	*texture;
 }					t_process_single_ray_variables;
 
+typedef struct s_move_player_vars
+{
+	float			move_step;
+	float			side_step;
+	float			move_x;
+	float			move_y;
+	float			new_x;
+	float			new_y;
+}					t_move_player_vars;
+
 void				draw_line(t_player *player, t_game *game, float dest_x,
 						float dest_y);
 

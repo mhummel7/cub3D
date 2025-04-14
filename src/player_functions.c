@@ -14,29 +14,24 @@
 
 void	move_player(t_player *player)
 {
-	float	move_step;
-	float	side_step;
-	float	move_x;
-	float	move_y;
-	float	new_x;
-	float	new_y;
+	t_move_player_vars	vars;
 
 	player->rotation_angle += player->turn_direction * player->turn_speed;
-	move_step = player->walk_direction * player->walk_speed;
-	side_step = player->diagonal_direction * player->walk_speed;
-	move_x = cos(player->rotation_angle) * move_step
-		+ cos(player->rotation_angle - PI / 2) * side_step;
-	move_y = sin(player->rotation_angle) * move_step
-		+ sin(player->rotation_angle - PI / 2) * side_step;
-	new_x = player->x;
-	new_y = player->y;
-	if (!check_obstacle_blocks(player->x + move_x, player->y, player))
-		new_x += move_x;
-	if (!check_obstacle_blocks(player->x, player->y + move_y, player))
-		new_y += move_y;
-	if (new_x != player->x || new_y != player->y)
+	vars.move_step = player->walk_direction * player->walk_speed;
+	vars.side_step = player->diagonal_direction * player->walk_speed;
+	vars.move_x = cos(player->rotation_angle) * vars.move_step
+		+ cos(player->rotation_angle - PI / 2) * vars.side_step;
+	vars.move_y = sin(player->rotation_angle) * vars.move_step
+		+ sin(player->rotation_angle - PI / 2) * vars.side_step;
+	vars.new_x = player->x;
+	vars.new_y = player->y;
+	if (!check_obstacle_blocks(player->x + vars.move_x, player->y, player))
+		vars.new_x += vars.move_x;
+	if (!check_obstacle_blocks(player->x, player->y + vars.move_y, player))
+		vars.new_y += vars.move_y;
+	if (vars.new_x != player->x || vars.new_y != player->y)
 	{
-		player->x = new_x;
-		player->y = new_y;
+		player->x = vars.new_x;
+		player->y = vars.new_y;
 	}
 }
