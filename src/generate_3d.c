@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 22:53:06 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/11 11:58:56 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/14 10:09:44 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	put_pixels(t_process_single_ray_variables *vars, t_player *player,
 {
 	uint32_t	color;
 
-	vars->tex_pos_y = vars->y + (vars->wall_strip_height / 2) - (SCREEN_HEIGHT / 2);
-	vars->tex_y = (int)(vars->tex_pos_y * ((float)texture->height / vars->wall_strip_height));
+	vars->tex_pos_y = vars->y + (vars->wall_strip_height / 2) - (SCREEN_HEIGHT
+			/ 2);
+	vars->tex_y = (int)(vars->tex_pos_y * ((float)texture->height
+				/ vars->wall_strip_height));
 	if (vars->tex_y < 0)
 		vars->tex_y = 0;
 	else if (vars->tex_y >= (int)texture->height)
@@ -88,10 +90,8 @@ void	process_single_ray(t_rays *rays, int x, t_player *player)
 	vars.wall_strip_height = (int)vars.projected_wall_height;
 	if ((*rays)[x].was_hit_vertical)
 		vars.wall_x = fmod((*rays)[x].wall_hit_y, CUBE_SIZE) / CUBE_SIZE;
-		// vars.wall_x = (*rays)[x].wall_hit_y - floor((*rays)[x].wall_hit_y);
 	else
 		vars.wall_x = fmod((*rays)[x].wall_hit_x, CUBE_SIZE) / CUBE_SIZE;
-		// vars.wall_x = (*rays)[x].wall_hit_x - floor((*rays)[x].wall_hit_x);
 	if ((*rays)[x].was_hit_vertical)
 	{
 		if ((*rays)[x].ray_angle > PI / 2 && (*rays)[x].ray_angle < 3 * PI / 2)

@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:28:22 by mhummel           #+#    #+#             */
-/*   Updated: 2025/04/11 11:36:07 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/14 10:10:55 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,6 @@ void	parse_cub_file(char *filename, t_game *game)
 	if (!game->no_texture || !game->so_texture || !game->we_texture
 		|| !game->ea_texture || !game->map)
 		error_exit_game("Missing required elements", game);
-}
-
-static int	count_map_lines(int fd)
-{
-	int		map_size;
-	char	*temp_line;
-
-	map_size = 1;
-	temp_line = get_next_line(fd);
-	while (temp_line != NULL)
-	{
-		strip_newline(temp_line);
-		if (ft_strlen(temp_line) == 0)
-		{
-			free(temp_line);
-			break ;
-		}
-		if (is_map_line(temp_line))
-			map_size++;
-		free(temp_line);
-		temp_line = get_next_line(fd);
-	}
-	return (map_size);
 }
 
 static void	allocate_map(t_game *game, int map_size)

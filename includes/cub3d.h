@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:42:11 by frocha            #+#    #+#             */
-/*   Updated: 2025/04/09 15:34:04 by mhummel          ###   ########.fr       */
+/*   Updated: 2025/04/14 10:11:44 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,9 @@ void				handle_line(char *line, t_game *game, int *map_started,
 void				read_map_lines(t_game *game, char *line, int fd,
 						int map_size);
 void				skip_to_map(int fd, char **line);
+int					count_map_lines(int fd);
+void				free_split(char **split);
+int					check_length(char **split);
 
 // free.c */
 void				free_game(t_str_access *str_access);
